@@ -221,7 +221,7 @@ html:not(.dark) h2,
 html:not(.dark) h3,
 html:not(.dark) strong { color: #172033 !important; }
 html:not(.dark) body { background: #f7f8fc; }
-html:not(.dark) img[src*="/images/"] { filter: brightness(1.42) contrast(.78) saturate(.74); }
+html:not(.dark) img[src*="/images/"] { filter: brightness(2.1) contrast(.46) saturate(.48); opacity: .62; }
 html:not(.dark) [class*="rgba(10,12,22"] { background-image: linear-gradient(110deg, rgba(255,255,255,.92), rgba(248,250,252,.32)) !important; }
 html:not(.dark) [class*="rgba(16,19,31"] { background-image: radial-gradient(circle at 90% 0%, rgba(34,211,238,.14), transparent 28%), linear-gradient(120deg, rgba(237,233,254,.88), rgba(255,255,255,.96)) !important; }
 html:not(.dark) [class*="from-[#0b0f1d]"] { --tw-gradient-from: rgba(255,255,255,.94) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255,255,255,0) var(--tw-gradient-to-position) !important; }
@@ -230,3 +230,7 @@ html:not(.dark) .bg-black\/20 { background-color: rgba(226,232,240,.56) !importa
 html:not(.dark) input,
 html:not(.dark) textarea,
 html:not(.dark) select { background-color: #fff !important; color: #172033 !important; border-color: rgba(148,163,184,.38) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

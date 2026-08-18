@@ -225,6 +225,12 @@ html:not(.dark) img[src*="/images/"] { filter: brightness(1.55) contrast(.70) sa
 html:not(.dark) img.maintainr-product-illustration { filter: none !important; opacity: 1 !important; }
 html:not(.dark) .maintainr-ops-thread h2 { color: #ffffff !important; }
 html:not(.dark) .maintainr-primary-action { color: #ffffff !important; }
+html:not(.dark) .maintainr-ops-thread { background-color: #101423 !important; }
+html:not(.dark) .maintainr-ops-thread [class*="bg-white/"] { background-color: rgba(255,255,255,.08) !important; }
+html:not(.dark) .maintainr-ops-thread [class*="text-slate-300"] { color: #cbd5e1 !important; }
+html:not(.dark) .maintainr-ops-thread [class*="text-white"] { color: #ffffff !important; }
+html, body, #root { max-width: 100%; overflow-x: clip; }
+.commercial-conversion-rail > a { min-width: 0; }
 html:not(.dark) [class*="rgba(10,12,22"] { background-image: linear-gradient(110deg, rgba(255,255,255,.92), rgba(248,250,252,.32)) !important; }
 html:not(.dark) [class*="rgba(16,19,31"] { background-image: radial-gradient(circle at 90% 0%, rgba(34,211,238,.14), transparent 28%), linear-gradient(120deg, rgba(237,233,254,.88), rgba(255,255,255,.96)) !important; }
 html:not(.dark) [class*="from-[#0b0f1d]"] { --tw-gradient-from: rgba(255,255,255,.94) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255,255,255,0) var(--tw-gradient-to-position) !important; }

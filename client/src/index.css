@@ -192,12 +192,17 @@ html[dir="rtl"] .lg\:pl-72 { padding-left: 0; padding-right: 18rem; }
 html:not(.dark) { color-scheme: light; }
 html:not(.dark) [class*="bg-[#080a12]"],
 html:not(.dark) [class*="bg-[#080b12]"],
+html:not(.dark) [class*="bg-[#090c16]"],
 html:not(.dark) [class*="bg-[#0b0e18]"] { background-color: #f7f8fc !important; }
 html:not(.dark) [class*="bg-[#0e111d]"],
 html:not(.dark) [class*="bg-[#101423]"],
 html:not(.dark) [class*="bg-[#10131f]"],
+html:not(.dark) [class*="bg-[#101522]"],
+html:not(.dark) [class*="bg-[#12192a]"],
+html:not(.dark) [class*="bg-[#17152c]"],
 html:not(.dark) [class*="bg-[#0b0f1d]"] { background-color: #ffffff !important; }
 html:not(.dark) [class*="bg-white/"] { background-color: rgba(255,255,255,.9) !important; }
+html:not(.dark) [class*="bg-black/"] { background-color: rgba(241,245,249,.82) !important; }
 html:not(.dark) [class*="border-white"] { border-color: rgba(148,163,184,.26) !important; }
 html:not(.dark) .text-white,
 html:not(.dark) [class*="text-slate-100"],
@@ -216,6 +221,10 @@ html:not(.dark) h2,
 html:not(.dark) h3,
 html:not(.dark) strong { color: #172033 !important; }
 html:not(.dark) body { background: #f7f8fc; }
+html:not(.dark) img[src*="/images/"] { filter: brightness(1.42) contrast(.78) saturate(.74); }
+html:not(.dark) [class*="rgba(10,12,22"] { background-image: linear-gradient(110deg, rgba(255,255,255,.92), rgba(248,250,252,.32)) !important; }
+html:not(.dark) [class*="rgba(16,19,31"] { background-image: radial-gradient(circle at 90% 0%, rgba(34,211,238,.14), transparent 28%), linear-gradient(120deg, rgba(237,233,254,.88), rgba(255,255,255,.96)) !important; }
+html:not(.dark) [class*="from-[#0b0f1d]"] { --tw-gradient-from: rgba(255,255,255,.94) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgba(255,255,255,0) var(--tw-gradient-to-position) !important; }
 html:not(.dark) .bg-black\/10,
 html:not(.dark) .bg-black\/20 { background-color: rgba(226,232,240,.56) !important; }
 html:not(.dark) input,

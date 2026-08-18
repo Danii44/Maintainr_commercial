@@ -15,3 +15,11 @@ The same local light experience was captured at a 390-pixel mobile viewport. The
 The expanded product-story review confirms that the home route now guides a visitor from the property-maintenance problem, through a four-step operational handoff, to role outcomes, workspace trust principles, and the appropriate next conversion action. The repository-owned product visuals were further softened to white-overlay, low-contrast supporting illustrations in light mode, leaving the default hero and sections free of dark imagery.
 
 The new story sections were checked on a 390-pixel mobile viewport and retain a readable one-column order, clear action hierarchy, and light-only surfaces. Arabic RTL verification at desktop width confirms right-aligned hero copy, correctly ordered workflow cards, and the fixed conversion paths remain legible in the expanded bilingual journey.
+
+## Follow-up commercial audit
+
+The live desktop and mobile audit confirmed that the default experience is light, the first hero remains legible, and the primary demo and quotation routes load. It also found that the public header and fixed conversion rail still surface a **Customer portal** action, with additional direct SaaS workspace and sign-in paths in legacy copy and footer content. These public portal paths will be removed so commercial visitors choose only an interactive demo, guided demo, or quotation journey.
+
+The audit also identified two design refinements: the repository-owned product visuals are overly muted after the light-mode treatment, reducing their explanatory value, and the long home narrative repeats elements of the core workflow after the first product story. The correction will retain pale surfaces but strengthen image readability, remove redundant launch paths, and keep the fixed mobile conversion rail from obscuring the lower content.
+
+The revised local desktop and mobile checks confirm that the header now offers only **Request demo** and **Request quote**, while the fixed conversion rail is limited to **Explore demo**, **Request demo**, and **Request quote**. The Customer portal action is absent from both layouts. The lighter image treatment is now sufficiently clear to support the product narrative without restoring dark image overlays; the compact three-action mobile rail remains readable.

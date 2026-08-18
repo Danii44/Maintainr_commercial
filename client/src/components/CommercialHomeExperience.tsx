@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ArrowRight, Building2, CheckCircle2, ClipboardCheck, Clock3, FileCheck2, Globe2, LayoutDashboard, ListTodo, Quote, Route, ShieldCheck, UsersRound, Wrench } from "lucide-react";
+import { useRef } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const artwork = {
@@ -15,20 +16,28 @@ function PrimaryLink({ href, children, tone = "primary" }: { href: string; child
   return <a href={href} className={className}>{children}</a>;
 }
 
-function ProductFrame() {
+function ProductFrame({ imageY, signalY, reduceMotion }: { imageY: MotionValue<number>; signalY: MotionValue<number>; reduceMotion: boolean | null }) {
   const { t } = useLanguage();
-  return <div className="relative">
-    <div className="absolute -inset-7 rounded-[3rem] bg-teal-200/45 blur-3xl" />
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_28px_80px_rgba(15,118,110,.16)]">
+  return <div className="commercial-product-stage relative isolate">
+    <motion.div style={{ y: signalY }} aria-hidden="true" className="commercial-orbit commercial-orbit-one" />
+    <motion.div style={{ y: signalY }} aria-hidden="true" className="commercial-orbit commercial-orbit-two" />
+    <motion.div style={{ y: imageY }} className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white shadow-[0_32px_90px_rgba(15,118,110,.20)]">
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(125deg,rgba(255,255,255,.20),transparent_34%,rgba(14,165,233,.11))]" />
       <img src={artwork.hero} alt={t("Maintainr property-maintenance workspace visual", "صورة لمساحة عمل Maintainr لصيانة العقارات")} className="maintainr-product-illustration block aspect-[16/10] w-full object-cover" />
-      <div className="absolute start-[5%] top-[7%] rounded-full border border-teal-300/50 bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-teal-800 shadow-lg backdrop-blur"><LayoutDashboard className="me-2 inline-block" size={13} />{t("Manager workspace", "مساحة عمل المدير")}</div>
-      <div className="absolute bottom-[7%] end-[5%] flex items-center gap-2 rounded-2xl border border-emerald-200 bg-white/95 px-3 py-2.5 text-[10px] font-bold uppercase tracking-[.12em] text-emerald-700 shadow-xl backdrop-blur"><span className="grid size-7 place-items-center rounded-lg bg-emerald-400 text-emerald-950"><CheckCircle2 size={15} /></span>{t("Completion verified", "تم التحقق من الإنجاز")}</div>
-    </div>
+      <motion.div animate={reduceMotion ? undefined : { y: [0, -7, 0] }} transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }} className="absolute start-[5%] top-[7%] z-20 rounded-full border border-teal-300/50 bg-white/95 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.14em] text-teal-800 shadow-lg backdrop-blur"><LayoutDashboard className="me-2 inline-block" size={13} />{t("Manager workspace", "مساحة عمل المدير")}</motion.div>
+      <motion.div animate={reduceMotion ? undefined : { y: [0, 7, 0] }} transition={{ duration: 5.6, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-[7%] end-[5%] z-20 flex items-center gap-2 rounded-2xl border border-emerald-200 bg-white/95 px-3 py-2.5 text-[10px] font-bold uppercase tracking-[.12em] text-emerald-700 shadow-xl backdrop-blur"><span className="grid size-7 place-items-center rounded-lg bg-emerald-400 text-emerald-950"><CheckCircle2 size={15} /></span>{t("Completion verified", "تم التحقق من الإنجاز")}</motion.div>
+    </motion.div>
   </div>;
 }
 
 export function CommercialHomeExperience() {
   const { t } = useLanguage();
+  const heroRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -42]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 64]);
+  const signalY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -94]);
   const workflow = [
     { icon: ClipboardCheck, label: t("Capture", "سجّل"), note: t("A structured request holds the issue, access notes, and context.", "يحفظ الطلب المنظم المشكلة وملاحظات الوصول والسياق.") },
     { icon: Route, label: t("Route", "وجّه"), note: t("The right person receives a clear next action and priority.", "يتلقى الشخص المناسب الإجراء التالي والأولوية بشكل واضح.") },
@@ -43,16 +52,20 @@ export function CommercialHomeExperience() {
   ];
 
   return <main className="commercial-mobile-safe overflow-hidden bg-[#f5f7fb] pb-28 text-[#172033]">
-    <section className="relative isolate overflow-hidden border-b border-slate-200/80 bg-[radial-gradient(circle_at_6%_35%,rgba(14,165,233,.14),transparent_26%),radial-gradient(circle_at_93%_8%,rgba(45,212,191,.25),transparent_27%),linear-gradient(135deg,#ffffff_0%,#f7faff_54%,#ecfeff_100%)]">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:py-20 lg:grid-cols-[.88fr_1.12fr] lg:items-center lg:gap-14 lg:px-8 lg:py-24">
-        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .48 }}>
+    <section ref={heroRef} className="commercial-hero-stage relative isolate overflow-hidden border-b border-slate-200/80 bg-[radial-gradient(circle_at_6%_35%,rgba(14,165,233,.14),transparent_26%),radial-gradient(circle_at_93%_8%,rgba(45,212,191,.25),transparent_27%),linear-gradient(135deg,#ffffff_0%,#f7faff_54%,#ecfeff_100%)]">
+      <div aria-hidden="true" className="commercial-hero-grid absolute inset-0 opacity-70" />
+      <motion.div style={{ y: signalY }} aria-hidden="true" className="commercial-hero-glow commercial-hero-glow-one" />
+      <motion.div style={{ y: imageY }} aria-hidden="true" className="commercial-hero-glow commercial-hero-glow-two" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:py-20 lg:grid-cols-[.88fr_1.12fr] lg:items-center lg:gap-14 lg:px-8 lg:py-28">
+        <motion.div style={{ y: copyY }} initial={{ opacity: 0, y: reduceMotion ? 0 : 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .58, ease: [0.23, 1, 0.32, 1] }}>
           <div className="inline-flex items-center gap-2 rounded-full border border-teal-300/60 bg-teal-50/90 px-3 py-1.5 text-[11px] font-bold tracking-[.13em] text-teal-800"><span className="size-1.5 rounded-full bg-teal-500 shadow-[0_0_12px_#14b8a6]" />{t("PROPERTY OPERATIONS, IN FLOW", "عمليات عقارية تسير بسلاسة")}</div>
           <h1 className="mt-6 max-w-3xl text-balance text-5xl font-semibold leading-[.98] tracking-[-.065em] text-[#11192c] sm:text-6xl lg:text-7xl">{t("Move maintenance from incoming report to verified result—without losing the thread.", "انقل الصيانة من البلاغ الوارد إلى نتيجة موثقة دون فقدان السياق.")}</h1>
           <p className="mt-7 max-w-xl text-lg leading-8 text-slate-600">{t("Maintainr gives every role a clear next action while one shared record preserves the context, progress, evidence, and history behind the work.", "يوفر Maintainr لكل دور الإجراء التالي بوضوح بينما يحفظ سجل مشترك واحد السياق والتقدم والإثبات والسجل وراء العمل.")}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row"><PrimaryLink href="/quote"><Quote size={17} />{t("Request a consultation", "اطلب استشارة")}</PrimaryLink><PrimaryLink href="/product" tone="white">{t("See the platform", "شاهد المنصة")}<ArrowRight size={16} /></PrimaryLink></div>
+          <div className="mt-9 grid max-w-lg grid-cols-3 gap-2 border-t border-slate-200/70 pt-5"><div><p className="text-[10px] font-bold tracking-[.14em] text-teal-700">01</p><p className="mt-1 text-xs font-medium text-slate-600">{t("Request", "طلب")}</p></div><div><p className="text-[10px] font-bold tracking-[.14em] text-sky-700">02</p><p className="mt-1 text-xs font-medium text-slate-600">{t("Coordinate", "تنسيق")}</p></div><div><p className="text-[10px] font-bold tracking-[.14em] text-emerald-700">03</p><p className="mt-1 text-xs font-medium text-slate-600">{t("Verify", "تحقق")}</p></div></div>
           <p className="mt-4 max-w-xl text-xs leading-5 text-slate-500">{t("Built for understandable role-based actions, English and Arabic interfaces, and right-to-left workflows.", "مصمم لإجراءات مفهومة حسب الدور وواجهات عربية وإنجليزية ومسارات عمل من اليمين إلى اليسار.")}</p>
         </motion.div>
-        <motion.div initial={{ opacity: 0, scale: .97, y: 14 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: .58, delay: .08 }}><ProductFrame /></motion.div>
+        <motion.div initial={{ opacity: 0, scale: reduceMotion ? 1 : .97, y: reduceMotion ? 0 : 18 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: .72, delay: .08, ease: [0.23, 1, 0.32, 1] }}><ProductFrame imageY={imageY} signalY={signalY} reduceMotion={reduceMotion} /></motion.div>
       </div>
     </section>
 

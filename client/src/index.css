@@ -249,8 +249,27 @@ html:not(.dark) input,
 html:not(.dark) textarea,
 html:not(.dark) select { background-color: #fff !important; color: #172033 !important; border-color: rgba(148,163,184,.38) !important; }
 
+/* Modern commercial motion system: visual depth is composited with transforms
+   only, and every movement is disabled for visitors who prefer reduced motion. */
+.commercial-hero-stage { min-height: 660px; }
+.commercial-hero-grid { background-image: linear-gradient(rgba(15,118,110,.075) 1px, transparent 1px), linear-gradient(90deg, rgba(15,118,110,.075) 1px, transparent 1px); background-size: 48px 48px; mask-image: linear-gradient(to bottom, rgba(0,0,0,.78), transparent 82%); }
+.commercial-hero-glow { position: absolute; border-radius: 999px; filter: blur(12px); pointer-events: none; }
+.commercial-hero-glow-one { inset-inline-end: 4%; top: 11%; width: 12rem; height: 12rem; background: radial-gradient(circle, rgba(14,165,233,.32), rgba(14,165,233,0) 70%); }
+.commercial-hero-glow-two { inset-inline-start: 39%; bottom: -6rem; width: 18rem; height: 18rem; background: radial-gradient(circle, rgba(20,184,166,.22), rgba(20,184,166,0) 70%); }
+.commercial-product-stage::before { content: ""; position: absolute; inset: 12% -5% -9%; border-radius: 2.75rem; background: linear-gradient(140deg, rgba(15,118,110,.12), rgba(14,165,233,.04)); transform: rotate(-3deg); }
+.commercial-product-stage::after { content: ""; position: absolute; inset: 22% -9% -2%; border: 1px solid rgba(15,118,110,.20); border-radius: 2.75rem; transform: rotate(3deg); pointer-events: none; }
+.commercial-orbit { position: absolute; z-index: 20; width: .72rem; height: .72rem; border-radius: 999px; background: #0ea5e9; box-shadow: 0 0 0 8px rgba(14,165,233,.12), 0 0 28px rgba(14,165,233,.55); }
+.commercial-orbit-one { inset-inline-start: -1.2rem; top: 30%; }
+.commercial-orbit-two { inset-inline-end: -1rem; bottom: 22%; background: #14b8a6; box-shadow: 0 0 0 8px rgba(20,184,166,.12), 0 0 28px rgba(20,184,166,.55); }
+.maintainr-ops-thread { position: relative; overflow: hidden; }
+.maintainr-ops-thread::after { content: ""; position: absolute; inset: auto -8% -11rem; height: 16rem; background: radial-gradient(circle, rgba(14,165,233,.16), transparent 66%); pointer-events: none; }
+.maintainr-ops-thread .rounded-2xl { transition: transform 220ms cubic-bezier(.23,1,.32,1), box-shadow 220ms cubic-bezier(.23,1,.32,1), border-color 220ms cubic-bezier(.23,1,.32,1); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .maintainr-ops-thread .rounded-2xl:hover { transform: translateY(-6px); border-color: rgba(15,118,110,.34) !important; box-shadow: 0 20px 42px rgba(15,23,42,.12) !important; } }
+@media (max-width: 640px) { .commercial-hero-stage { min-height: 0; } .commercial-hero-grid { background-size: 36px 36px; } .commercial-orbit { display: none; } .commercial-product-stage::before { inset: 8% -3% -6%; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .commercial-hero-glow, .commercial-orbit { display: none; }
 }
 
 /* Commercial visitors evaluate Maintainr through the safe demo or a tailored

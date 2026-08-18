@@ -9,9 +9,9 @@ import { CommercialHeader } from "../components/CommercialHeader";
 import { CommercialStory } from "../components/CommercialStory";
 
 const visuals = {
-  command: "/manus-storage/maintainr-hero-command-center_753f2bb5.png",
-  roles: "/manus-storage/maintainr-role-coordination_25c19865.png",
-  evidence: "/manus-storage/maintainr-trust-boundary_84e92aef.png",
+  command: "/images/maintainr-hero-command-center.webp",
+  roles: "/images/maintainr-role-coordination.webp",
+  evidence: "/images/maintainr-trust-boundary.webp",
 };
 
 type PageKey = "home" | "product" | "features" | "solutions" | "pricing" | "quote" | "faq" | "insights" | "about" | "contact";

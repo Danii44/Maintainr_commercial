@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { handler } from "./quote-request";
+import { handler } from "../netlify/functions/quote-request";
 
 describe("commercial quotation endpoint", () => {
   it("rejects non-POST requests without touching a database", async () => {

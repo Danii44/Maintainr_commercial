@@ -14,6 +14,6 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["netlify/functions/**/*.test.ts", "netlify/functions/**/*.spec.ts"],
+    include: ["tests/**/*.test.ts", "tests/**/*.spec.ts"],
   },
 });

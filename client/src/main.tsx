@@ -9,7 +9,7 @@ import "./index.css";
 
 function CommercialSurface() {
   const pathname = typeof window === "undefined" ? "/" : window.location.pathname;
-  return <ThemeProvider defaultTheme="dark"><LanguageProvider><Toaster/>{pathname === "/demo" ? <InteractiveDemo/> : <CommercialWebsite/>}<CommercialConversionRail/><div aria-hidden="true" className="h-20"/></LanguageProvider></ThemeProvider>;
+  return <ThemeProvider switchable><LanguageProvider><Toaster/>{pathname === "/demo" ? <InteractiveDemo/> : <CommercialWebsite/>}<CommercialConversionRail/><div aria-hidden="true" className="h-20"/></LanguageProvider></ThemeProvider>;
 }
 
 createRoot(document.getElementById("root")!).render(

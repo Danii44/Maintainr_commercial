@@ -1,5 +1,5 @@
 {
-  "include": ["client/src/main.tsx", "client/src/pages/CommercialWebsite.tsx", "client/src/pages/InteractiveDemo.tsx", "client/src/pages/StandaloneQuotePage.tsx", "client/src/contexts/ThemeContext.tsx", "client/src/contexts/LanguageContext.tsx", "client/src/components/ui/sonner.tsx", "netlify/functions/**/*.ts"],
+  "include": ["client/src/main.tsx", "client/src/pages/CommercialWebsite.tsx", "client/src/pages/StandaloneQuotePage.tsx", "client/src/contexts/ThemeContext.tsx", "client/src/contexts/LanguageContext.tsx", "client/src/components/ui/sonner.tsx", "netlify/functions/**/*.ts"],
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
   "compilerOptions": {
     "incremental": true,

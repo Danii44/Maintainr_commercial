@@ -1,5 +1,3 @@
-export type EvaluationIntent = "demo" | "quote";
-
 const fallbackSaasUrl = "https://maintainr-saas.netlify.app";
 
 export function normalizeSaasAppUrl(value?: string) {
@@ -11,11 +9,7 @@ export function saasDestination(baseUrl: string, path: "/sign-in" | "/create-wor
   return `${normalizeSaasAppUrl(baseUrl)}${path}`;
 }
 
-export function evaluationIntentFromSearch(search: string): EvaluationIntent {
-  return new URLSearchParams(search).get("intent") === "demo" ? "demo" : "quote";
-}
-
-export function quoteMessageForIntent(intent: EvaluationIntent, message: string) {
-  const prefix = intent === "demo" ? "[GUIDED DEMO REQUEST]" : "[QUOTATION REQUEST]";
+export function quoteMessage(message: string) {
+  const prefix = "[MAINTAINR CONSULTATION REQUEST]";
   return message.trim() ? `${prefix}\n${message.trim()}` : prefix;
 }

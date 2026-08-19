@@ -6,6 +6,9 @@ type DemoRole = "PROPERTY_MANAGER" | "TENANT" | "TECHNICIAN" | "FLAT_OWNER";
 type Account = { id: number; email: string; displayName: string; role: DemoRole; phone: string | null; avatarUrl: string | null; unitCode: string };
 type DemoTicket = { id: number; title: string; description: string; unit: string; status: "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "RESOLVED"; priority: "LOW" | "MEDIUM" | "HIGH" | "URGENT"; submittedById: number; assignedToId: number | null; resolutionNotes: string | null; createdAt: string };
 type DemoReminder = { id: number; title: string; description: string; unit: string | null; dueAt: string; isAcknowledged: boolean };
+type DemoInquiry = { id: number; kind: "INQUIRY" | "COMPLAINT"; status: "OPEN" | "IN_REVIEW" | "RESOLVED" | "CLOSED"; subject: string; body: string; unit: string | null; createdAt: string };
+type DemoAppointment = { id: number; title: string; status: "SCHEDULED" | "CONFIRMED" | "COMPLETED" | "CANCELLED"; scheduledStart: string; scheduledEnd: string; unit: string | null };
+type DemoConversation = { id: number; subject: string; kind: "GENERAL" | "TICKET" | "INQUIRY"; updatedAt: string };
 
 const COOKIE_NAME = "maintainr_demo_session";
 const SESSION_MS = 1000 * 60 * 60 * 8;
@@ -84,9 +87,20 @@ async function stateFor(client: PoolClient, account: Account) {
     `select r.id, r.title, r.description, r.unit_code as unit, r.due_at as "dueAt", exists(select 1 from demo_reminder_acknowledgements a where a.reminder_id = r.id and a.account_id = $1) as "isAcknowledged"
      from demo_reminders r where ${reminderConditions.join(" and ")} order by r.due_at asc`, reminderValues,
   );
+  const inquiryConditions = ["true"];
+  const inquiryValues: unknown[] = [];
+  if (account.role === "TENANT" || account.role === "FLAT_OWNER") { inquiryValues.push(account.unitCode, account.id); inquiryConditions.push(`(i.unit_code = $${inquiryValues.length - 1} or i.created_by_id = $${inquiryValues.length})`); }
+  if (account.role === "TECHNICIAN") { inquiryValues.push(account.id); inquiryConditions.push(`i.assigned_to_id = $${inquiryValues.length}`); }
+  const inquiries = await client.query<DemoInquiry>(`select i.id, i.kind, i.status, i.subject, i.body, i.unit_code as unit, i.created_at as "createdAt" from demo_inquiries i where ${inquiryConditions.join(" and ")} order by i.updated_at desc`, inquiryValues);
+  const appointmentConditions = ["true"];
+  const appointmentValues: unknown[] = [];
+  if (account.role === "TENANT" || account.role === "FLAT_OWNER") { appointmentValues.push(account.unitCode); appointmentConditions.push(`a.unit_code = $${appointmentValues.length}`); }
+  if (account.role === "TECHNICIAN") { appointmentValues.push(account.id); appointmentConditions.push(`a.technician_id = $${appointmentValues.length}`); }
+  const appointments = await client.query<DemoAppointment>(`select a.id, a.title, a.status, a.scheduled_start as "scheduledStart", a.scheduled_end as "scheduledEnd", a.unit_code as unit from demo_appointments a where ${appointmentConditions.join(" and ")} order by a.scheduled_start asc`, appointmentValues);
+  const conversations = await client.query<DemoConversation>(account.role === "PROPERTY_MANAGER" ? "select id, subject, kind, updated_at as \"updatedAt\" from demo_conversations order by updated_at desc" : "select c.id, c.subject, c.kind, c.updated_at as \"updatedAt\" from demo_conversations c join demo_conversation_participants p on p.conversation_id = c.id where p.account_id = $1 order by c.updated_at desc", account.role === "PROPERTY_MANAGER" ? [] : [account.id]);
   const technicians = account.role === "PROPERTY_MANAGER" ? await client.query<{ id: number; name: string }>("select id, display_name as name from demo_accounts where role = 'TECHNICIAN' and is_active = true order by id") : { rows: [] };
   const people = account.role === "PROPERTY_MANAGER" ? await client.query<{ id: number; email: string; name: string; role: DemoRole; unitCode: string; isActive: boolean }>("select id, email, display_name as name, role, unit_code as \"unitCode\", is_active as \"isActive\" from demo_accounts order by role, display_name") : { rows: [] };
-  return { account: publicAccount(account), tickets: tickets.rows, reminders: reminders.rows, technicians: technicians.rows, people: people.rows, isolated: true };
+  return { account: publicAccount(account), tickets: tickets.rows, reminders: reminders.rows, inquiries: inquiries.rows, appointments: appointments.rows, conversations: conversations.rows, technicians: technicians.rows, people: people.rows, isolated: true };
 }
 
 function canManage(role: DemoRole) { return role === "PROPERTY_MANAGER"; }
@@ -200,6 +214,37 @@ export const handler: Handler = async (event) => {
       const accessible = await client.query("select id from demo_reminders where id = $1 and (assigned_to_id is null or assigned_to_id = $2 or $3 = 'PROPERTY_MANAGER')", [reminderId, account.id, account.role]);
       if (!accessible.rowCount) return json(403, { error: "This demo reminder is not available for the current role." });
       await client.query("insert into demo_reminder_acknowledgements (reminder_id, account_id) values ($1,$2) on conflict (reminder_id, account_id) do update set acknowledged_at = now()", [reminderId, account.id]);
+      return json(200, await stateFor(client, account));
+    }
+    if (action === "create-inquiry") {
+      if (account.role !== "TENANT" && account.role !== "FLAT_OWNER") return json(403, { error: "Only demo residents and owners can create an inquiry or complaint." });
+      const kind = input.kind === "COMPLAINT" ? "COMPLAINT" : "INQUIRY";
+      const subject = typeof input.subject === "string" ? input.subject.trim() : "";
+      const body = typeof input.body === "string" ? input.body.trim() : "";
+      if (subject.length < 3 || body.length < 10) return json(400, { error: "Add a subject and at least 10 characters of detail." });
+      await client.query("insert into demo_inquiries (unit_code, created_by_id, kind, subject, body) values ($1,$2,$3,$4,$5)", [account.unitCode, account.id, kind, subject, body]);
+      return json(200, await stateFor(client, account));
+    }
+    if (action === "manager-create-appointment") {
+      if (!canManage(account.role)) return json(403, { error: "Only the demo manager can schedule a maintenance visit." });
+      const title = typeof input.title === "string" ? input.title.trim() : "";
+      const start = typeof input.scheduledStart === "string" ? new Date(input.scheduledStart) : null;
+      const end = typeof input.scheduledEnd === "string" ? new Date(input.scheduledEnd) : null;
+      const technicianId = Number(input.technicianId);
+      if (title.length < 3 || !start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start || !Number.isInteger(technicianId)) return json(400, { error: "Enter a visit title, valid time range, and technician." });
+      const technician = await client.query("select id from demo_accounts where id = $1 and role = 'TECHNICIAN' and is_active = true", [technicianId]);
+      if (!technician.rowCount) return json(400, { error: "Choose an active demo technician." });
+      await client.query("insert into demo_appointments (unit_code, technician_id, created_by_id, title, status, scheduled_start, scheduled_end) values ('A-204',$1,$2,$3,'SCHEDULED',$4,$5)", [technicianId, account.id, title, start, end]);
+      return json(200, await stateFor(client, account));
+    }
+    if (action === "send-message") {
+      const conversationId = Number(input.conversationId);
+      const message = typeof input.body === "string" ? input.body.trim() : "";
+      if (!Number.isInteger(conversationId) || message.length < 1 || message.length > 4000) return json(400, { error: "Enter a valid message." });
+      const allowed = account.role === "PROPERTY_MANAGER" || (await client.query("select 1 from demo_conversation_participants where conversation_id = $1 and account_id = $2", [conversationId, account.id])).rowCount;
+      if (!allowed) return json(403, { error: "This demo conversation is not available to the current role." });
+      await client.query("insert into demo_messages (conversation_id, author_id, body) values ($1,$2,$3)", [conversationId, account.id, message]);
+      await client.query("update demo_conversations set updated_at = now() where id = $1", [conversationId]);
       return json(200, await stateFor(client, account));
     }
     return json(400, { error: "Unknown demo action." });

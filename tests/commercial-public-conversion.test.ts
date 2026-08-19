@@ -5,10 +5,11 @@ const root = new URL("..", import.meta.url);
 
 describe("public commercial conversion controls", () => {
   it("keeps the header and fixed rail focused on the production platform and consultation path", async () => {
-    const [header, rail, site] = await Promise.all([
+    const [header, rail, site, styles] = await Promise.all([
       readFile(new URL("client/src/components/CommercialHeader.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialConversionRail.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/CommercialWebsite.tsx", root), "utf8"),
+      readFile(new URL("client/src/index.css", root), "utf8"),
     ]);
 
     expect(header).not.toContain("Customer portal");
@@ -20,5 +21,9 @@ describe("public commercial conversion controls", () => {
     expect(site).toContain("maintainr-v3");
     expect(site).toContain("PageHero");
     expect(site.toLowerCase()).not.toContain("demo");
+    expect(site).toContain("whileInView");
+    expect(site).toContain("whileHover");
+    expect(styles).toContain("scroll-behavior: smooth");
+    expect(styles).toContain("prefers-reduced-motion: reduce");
   });
 });

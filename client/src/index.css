@@ -290,6 +290,7 @@ a[href="/create-workspace"] {
 
 /* Maintainr v3: an architectural, editorial commercial system. */
 .maintainr-v3 { background: #f3f1ec; }
+.maintainr-v3 { --maintainr-ink: #172033; --maintainr-copy: #526176; --maintainr-dark: #172033; --maintainr-dark-copy: #d6e1ee; --maintainr-mint: #d9f5f1; }
 .maintainr-v3-grid { background-image: linear-gradient(rgba(215,247,241,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(215,247,241,.18) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to bottom, black, transparent 78%); }
 .maintainr-v3 img { filter: none !important; opacity: 1 !important; }
 .maintainr-v3 [class*="text-slate-300"] { color: #cbd5e1 !important; }
@@ -305,6 +306,15 @@ html:not(.dark) .maintainr-v3 .bg-\[\#0b1720\] .text-white,
 html:not(.dark) .maintainr-shell-header .text-white { color: #ffffff !important; }
 html:not(.dark) .maintainr-v3 .bg-\[\#0b1720\] [class*="text-slate-300"],
 html:not(.dark) .maintainr-shell-header [class*="text-slate-300"] { color: #cbd5e1 !important; }
+.maintainr-v3 .bg-\[\#172033\] { color: #ffffff !important; background-color: var(--maintainr-dark) !important; }
+.maintainr-v3 .bg-\[\#172033\] h1,
+.maintainr-v3 .bg-\[\#172033\] h2,
+.maintainr-v3 .bg-\[\#172033\] h3,
+.maintainr-v3 .bg-\[\#172033\] .text-white { color: #ffffff !important; }
+.maintainr-v3 .bg-\[\#172033\] p:not([class*="text-"]),
+.maintainr-v3 .bg-\[\#172033\] [class*="text-slate-300"] { color: var(--maintainr-dark-copy) !important; }
+.maintainr-v3 .bg-\[\#172033\] [class*="text-\[\#8fe0d4\]"],
+.maintainr-v3 .bg-\[\#172033\] [class*="text-\[\#9eece0\]"] { color: #9eece0 !important; }
 html:not(.dark) .maintainr-v3-hero h1 { color: #ffffff !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-slate-300"] { color: #cbd5e1 !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-white"] { color: #ffffff !important; }
@@ -312,12 +322,14 @@ html:not(.dark) .maintainr-v3-hero [class*="text-white"] { color: #ffffff !impor
 /* Softec-inspired Maintainr adaptation: a bright, spacious editorial SaaS canvas
    using Maintainr’s own teal and sky identity rather than external branding. */
 .softec-maintainr { background: #fff; }
+.softec-maintainr { color: var(--maintainr-ink); }
 .softec-maintainr-hero { background: radial-gradient(circle at 15% 5%, rgba(14,165,233,.11), transparent 25%), radial-gradient(circle at 88% 12%, rgba(20,184,166,.16), transparent 28%), linear-gradient(180deg, #ffffff 0%, #f7fffe 78%, #ffffff 100%); }
 .softec-orbit { position: absolute; width: 22rem; height: 22rem; border-radius: 999px; filter: blur(5px); pointer-events: none; opacity: .66; }
 .softec-orbit-left { inset-inline-start: -15rem; top: 17rem; background: radial-gradient(circle, rgba(14,165,233,.13), transparent 68%); }
 .softec-orbit-right { inset-inline-end: -14rem; top: 3rem; background: radial-gradient(circle, rgba(20,184,166,.16), transparent 68%); }
 .softec-maintainr img { filter: none !important; opacity: 1 !important; }
 .softec-maintainr h1, .softec-maintainr h2, .softec-maintainr h3 { color: inherit !important; }
+.softec-maintainr p { color: inherit; }
 .softec-maintainr-header a:focus-visible, .softec-maintainr a:focus-visible { outline: 3px solid #0ea5e9; outline-offset: 4px; }
 .softec-page-hero { background: radial-gradient(circle at 12% 10%, rgba(14,165,233,.10), transparent 27%), radial-gradient(circle at 88% 12%, rgba(20,184,166,.13), transparent 28%), linear-gradient(180deg, #fff 0%, #f7fffe 100%); }
 .softec-page-hero img { filter: none !important; opacity: 1 !important; }

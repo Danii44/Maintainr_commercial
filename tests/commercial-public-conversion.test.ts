@@ -35,5 +35,8 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("maintainr-fade-left");
     expect(home).toContain("maintainr-fade-right");
     expect(styles).toContain("prefers-reduced-motion: no-preference");
+    expect(styles).toContain("--maintainr-dark-copy");
+    expect(styles).toContain(".bg-\\[\\#172033\\]");
+    expect(styles).toContain("color: #ffffff !important");
   });
 });

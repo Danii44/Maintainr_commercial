@@ -324,7 +324,7 @@ html:not(.dark) .maintainr-v3-hero [class*="text-white"] { color: #ffffff !impor
 @media (max-width: 640px) { .softec-orbit { width: 16rem; height: 16rem; } }
 
 /* Maintainr motion layer: transform-only movement for smooth performance. */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 .softec-maintainr a, .maintainr-v3 a { transition: color 180ms cubic-bezier(.23,1,.32,1), background-color 180ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.23,1,.32,1), box-shadow 180ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1); }
 .softec-maintainr a:active, .maintainr-v3 a:active { transform: scale(.97); }
 .softec-maintainr-header nav a { position: relative; }
@@ -333,5 +333,13 @@ html { scroll-behavior: smooth; }
 .maintainr-interactive-row { will-change: transform; }
 .maintainr-longform .maintainr-story-card, .maintainr-longform .maintainr-role-card, .maintainr-longform .maintainr-system-step, .maintainr-longform .maintainr-foundation-card { transition: transform 220ms cubic-bezier(.23,1,.32,1), box-shadow 220ms cubic-bezier(.23,1,.32,1), border-color 220ms cubic-bezier(.23,1,.32,1); }
 .maintainr-longform .maintainr-home-faq { transition: border-color 180ms cubic-bezier(.23,1,.32,1); }
+.maintainr-longform section { scroll-margin-top: 88px; }
+.maintainr-fade-left, .maintainr-fade-right { will-change: transform, opacity; }
+@media (prefers-reduced-motion: no-preference) {
+  .maintainr-fade-left, .maintainr-fade-right { opacity: 0; transition: opacity 700ms cubic-bezier(.23,1,.32,1), transform 700ms cubic-bezier(.23,1,.32,1); }
+  .maintainr-fade-left { transform: translate3d(-58px, 0, 0); }
+  .maintainr-fade-right { transform: translate3d(58px, 0, 0); }
+  .maintainr-fade-left.is-revealed, .maintainr-fade-right.is-revealed { opacity: 1; transform: translate3d(0, 0, 0); }
+}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .maintainr-longform .maintainr-story-card:hover, .maintainr-longform .maintainr-role-card:hover, .maintainr-longform .maintainr-system-step:hover, .maintainr-longform .maintainr-foundation-card:hover { transform: translateY(-7px); border-color: #8bd7cc; box-shadow: 0 23px 46px rgba(15,118,110,.12); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .softec-maintainr *, .maintainr-v3 * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, BellRing, Building2, CheckCircle2, ClipboardCheck, FileCheck2, Globe2, Languages, Quote, Route, ShieldCheck, Sparkles, UserRoundCheck, UsersRound, Wrench } from "lucide-react";
+import { useEffect } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const visual = {
@@ -12,9 +13,12 @@ function Primary({ href, children }: { href: string; children: React.ReactNode }
   return <a href={href} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#0f766e] px-6 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(15,118,110,.22)] transition hover:-translate-y-0.5 hover:bg-[#115e59] active:scale-[.97]">{children}</a>;
 }
 
-function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+type RevealDirection = "up" | "left" | "right";
+function Reveal({ children, delay = 0, className = "", direction = "up" }: { children: React.ReactNode; delay?: number; className?: string; direction?: RevealDirection }) {
   const reduce = useReducedMotion();
-  return <motion.div initial={{ opacity: 0, y: reduce ? 0 : 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} transition={{ duration: .58, delay, ease: [0.23, 1, 0.32, 1] }} className={className}>{children}</motion.div>;
+  const offset = reduce ? 0 : 58;
+  const initial = direction === "left" ? { opacity: 0, x: -offset, y: 0 } : direction === "right" ? { opacity: 0, x: offset, y: 0 } : { opacity: 0, x: 0, y: reduce ? 0 : 24 };
+  return <motion.div initial={initial} whileInView={{ opacity: 1, x: 0, y: 0 }} viewport={{ once: true, amount: .16, margin: "0px 0px -9% 0px" }} transition={{ duration: .72, delay, ease: [0.23, 1, 0.32, 1] }} className={className}>{children}</motion.div>;
 }
 
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
@@ -24,6 +28,22 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
 export function CommercialHomeExperience() {
   const { t } = useLanguage();
   const reduce = useReducedMotion();
+  useEffect(() => {
+    const leftSelector = ".maintainr-longform section:nth-of-type(4) h2, .maintainr-longform section:nth-of-type(4) p, .maintainr-longform section:nth-of-type(5) h2, .maintainr-longform section:nth-of-type(7) h2";
+    const rightSelector = ".maintainr-longform section:nth-of-type(4) img, .maintainr-longform section:nth-of-type(5) img, .maintainr-longform section:nth-of-type(7) div[class*='shadow']";
+    const left = Array.from(document.querySelectorAll<HTMLElement>(leftSelector));
+    const right = Array.from(document.querySelectorAll<HTMLElement>(rightSelector));
+    left.forEach(element => element.classList.add("maintainr-fade-left"));
+    right.forEach(element => element.classList.add("maintainr-fade-right"));
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-revealed");
+        observer.unobserve(entry.target);
+      }
+    }), { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+    [...left, ...right].forEach(element => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
   const friction = [
     { icon: ClipboardCheck, title: t("A request begins without the right context", "طلب يبدأ من دون السياق المناسب"), text: t("Access details, urgency, previous work, and photos can be scattered before a technician sees the job.", "قد تتناثر تفاصيل الوصول والأولوية والعمل السابق والصور قبل أن يرى الفني المهمة.") },
     { icon: Route, title: t("The handoff changes the story", "التسليم يغيّر القصة"), text: t("When ownership moves between people, the details should move with it—not disappear into another conversation.", "عندما تنتقل الملكية بين الأشخاص، يجب أن تنتقل التفاصيل معها، لا أن تختفي في محادثة أخرى.") },

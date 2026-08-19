@@ -32,5 +32,8 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("PLANNED WORK, MADE VISIBLE");
     expect(home).toContain("FOUNDATIONS FOR DAILY USE");
     expect(home).toContain("PRACTICAL QUESTIONS");
+    expect(home).toContain("maintainr-fade-left");
+    expect(home).toContain("maintainr-fade-right");
+    expect(styles).toContain("prefers-reduced-motion: no-preference");
   });
 });

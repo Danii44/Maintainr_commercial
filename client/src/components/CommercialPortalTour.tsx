@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { BellRing, Building2, CalendarDays, CheckCircle2, ChevronRight, ClipboardCheck, FileText, History, Image, LayoutDashboard, ShieldCheck, SlidersHorizontal, UserRoundCheck, UsersRound, Wrench } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
-import { InteractiveWorkspaceExperience } from "./InteractiveWorkspaceExperience";
 
 type TourRole = "manager" | "resident" | "technician" | "owner";
 
@@ -53,7 +52,6 @@ export function CommercialPortalTour() {
       <div className="mt-24 grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-end"><div><p className="text-xs font-bold tracking-[.18em] text-[#0f766e]">{t("WHAT THE RECORD HOLDS", "ما الذي يحتفظ به السجل")}</p><h2 className="mt-5 text-4xl font-semibold leading-[1.04] tracking-[-.055em] text-[#172033] sm:text-5xl">{t("A request is more useful when the evidence stays with the work.", "يكون الطلب أكثر فائدة عندما يبقى الإثبات مع العمل.")}</h2><p className="mt-6 max-w-md leading-7 text-[#526176]">{t("The interface shown above is not a public demo account. It is a safe product-tour representation of the working information a Maintainr request can bring together.", "الواجهة المعروضة أعلاه ليست حساب عرض عام. إنها تمثيل آمن لجولة المنتج للمعلومات العملية التي يمكن أن يجمعها طلب Maintainr.")}</p></div><div className="grid gap-3 sm:grid-cols-2">{requestParts.map(({ icon: Icon, title, body }) => <article key={title} className="rounded-[1.5rem] border border-slate-100 bg-white p-6 shadow-[0_14px_34px_rgba(23,32,51,.05)] transition hover:-translate-y-1 hover:border-[#8bd7cc]"><Icon size={22} className="text-[#0f766e]" /><h3 className="mt-9 text-xl font-semibold text-[#172033]">{title}</h3><p className="mt-3 text-sm leading-6 text-[#526176]">{body}</p></article>)}</div></div>
 
       <div className="mt-24 rounded-[2rem] bg-[#172033] p-7 text-white sm:p-12"><div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]"><div><p className="text-xs font-bold tracking-[.18em] text-[#9eece0]">{t("BUILT FOR THE REAL OPERATING ENVIRONMENT", "مصمم لبيئة التشغيل الحقيقية")}</p><h2 className="mt-5 text-4xl font-semibold leading-[1.04] tracking-[-.055em] sm:text-5xl">{t("More information for the people who must run the system.", "مزيد من المعلومات للأشخاص الذين يجب أن يديروا النظام.")}</h2></div><div className="grid gap-3 md:grid-cols-3">{assurance.map(({ icon: Icon, title, body }) => <article key={title} className="rounded-2xl border border-white/15 bg-white/5 p-5"><Icon size={21} className="text-[#9eece0]" /><h3 className="mt-8 text-lg font-semibold text-white">{title}</h3><p className="mt-3 text-sm leading-6 text-slate-300">{body}</p></article>)}</div></div></div>
-      <InteractiveWorkspaceExperience />
     </div>
   </section>;
 }

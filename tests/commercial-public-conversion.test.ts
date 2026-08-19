@@ -5,12 +5,13 @@ const root = new URL("..", import.meta.url);
 
 describe("public commercial conversion controls", () => {
   it("keeps the header and fixed rail focused on the production platform and consultation path", async () => {
-    const [header, rail, site, home, tour, workspace, styles] = await Promise.all([
+    const [header, rail, site, home, tour, experience, workspace, styles] = await Promise.all([
       readFile(new URL("client/src/components/CommercialHeader.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialConversionRail.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/CommercialWebsite.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialHomeExperience.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialPortalTour.tsx", root), "utf8"),
+      readFile(new URL("client/src/pages/ProductExperiencePage.tsx", root), "utf8"),
       readFile(new URL("client/src/components/InteractiveWorkspaceExperience.tsx", root), "utf8"),
       readFile(new URL("client/src/index.css", root), "utf8"),
     ]);
@@ -38,6 +39,10 @@ describe("public commercial conversion controls", () => {
     expect(tour).toContain("safe, no-login view");
     expect(tour).toContain("Role-based view");
     expect(tour).toContain("BUILT FOR THE REAL OPERATING ENVIRONMENT");
+    expect(tour).not.toContain("InteractiveWorkspaceExperience");
+    expect(site).toContain('"/experience": "experience"');
+    expect(experience).toContain("MAINTAINR PRODUCT EXPERIENCE");
+    expect(experience).toContain("InteractiveWorkspaceExperience");
     expect(workspace).toContain("INTERACTIVE WORKSPACE");
     expect(workspace).toContain("Changes stay in this browser session");
     expect(workspace).toContain("Submit request");

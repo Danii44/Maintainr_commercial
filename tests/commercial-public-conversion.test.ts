@@ -5,11 +5,12 @@ const root = new URL("..", import.meta.url);
 
 describe("public commercial conversion controls", () => {
   it("keeps the header and fixed rail focused on the production platform and consultation path", async () => {
-    const [header, rail, site, home, styles] = await Promise.all([
+    const [header, rail, site, home, tour, styles] = await Promise.all([
       readFile(new URL("client/src/components/CommercialHeader.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialConversionRail.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/CommercialWebsite.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialHomeExperience.tsx", root), "utf8"),
+      readFile(new URL("client/src/components/CommercialPortalTour.tsx", root), "utf8"),
       readFile(new URL("client/src/index.css", root), "utf8"),
     ]);
 
@@ -32,6 +33,10 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("PLANNED WORK, MADE VISIBLE");
     expect(home).toContain("FOUNDATIONS FOR DAILY USE");
     expect(home).toContain("PRACTICAL QUESTIONS");
+    expect(tour).toContain("TAKE A PRODUCT TOUR");
+    expect(tour).toContain("safe, no-login view");
+    expect(tour).toContain("Role-based view");
+    expect(tour).toContain("BUILT FOR THE REAL OPERATING ENVIRONMENT");
     expect(home).toContain("maintainr-fade-left");
     expect(home).toContain("maintainr-fade-right");
     expect(styles).toContain("prefers-reduced-motion: no-preference");

@@ -4,24 +4,22 @@ import { describe, expect, it } from "vitest";
 const root = new URL("..", import.meta.url);
 
 describe("public commercial conversion controls", () => {
-  it("keeps the header and fixed rail focused on the production platform and consultation path", async () => {
-    const [header, rail, site, home, tour, experience, workspace, styles] = await Promise.all([
+  it("keeps public conversion controls focused on the dedicated Product Experience and consultation path", async () => {
+    const [header, entry, site, home, tour, experience, styles] = await Promise.all([
       readFile(new URL("client/src/components/CommercialHeader.tsx", root), "utf8"),
-      readFile(new URL("client/src/components/CommercialConversionRail.tsx", root), "utf8"),
+      readFile(new URL("client/src/main.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/CommercialWebsite.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialHomeExperience.tsx", root), "utf8"),
       readFile(new URL("client/src/components/CommercialPortalTour.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/ProductExperiencePage.tsx", root), "utf8"),
-      readFile(new URL("client/src/components/InteractiveWorkspaceExperience.tsx", root), "utf8"),
       readFile(new URL("client/src/index.css", root), "utf8"),
     ]);
 
     expect(header).not.toContain("Customer portal");
     expect(header.toLowerCase()).not.toContain("demo");
-    expect(rail).not.toContain("Customer portal");
-    expect(rail.toLowerCase()).not.toContain("demo");
-    expect(rail).toContain('href="/product"');
-    expect(rail).toContain('href="/quote"');
+    expect(entry).toContain('a[href="#interactive-workspace"]');
+    expect(entry).toContain('anchor.setAttribute("href", "/experience")');
+    expect(entry).toContain('window.location.replace("/experience")');
     expect(site).toContain("maintainr-v3");
     expect(site).toContain("PageHero");
     expect(site.toLowerCase()).not.toContain("demo");
@@ -36,24 +34,25 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("FOUNDATIONS FOR DAILY USE");
     expect(home).toContain("PRACTICAL QUESTIONS");
     expect(tour).toContain("TAKE A PRODUCT TOUR");
-    expect(tour).toContain("safe, no-login view");
-    expect(tour).toContain("Role-based view");
-    expect(tour).toContain("BUILT FOR THE REAL OPERATING ENVIRONMENT");
+    expect(tour).toContain('href="/experience"');
+    expect(tour).toContain('t("Explore the experience", "استكشف التجربة")');
+    expect(tour).toContain("Explore the full workspace, not a small preview.");
+    expect(tour).not.toContain("Portal roles");
+    expect(tour).not.toContain("Role-based view");
     expect(tour).not.toContain("InteractiveWorkspaceExperience");
     expect(site).toContain('"/experience": "experience"');
-    expect(experience).toContain("MAINTAINR PRODUCT EXPERIENCE");
-    expect(experience).toContain("InteractiveWorkspaceExperience");
-    expect(workspace).toContain("INTERACTIVE WORKSPACE");
-    expect(workspace).toContain("Changes stay in this browser session");
-    expect(workspace).toContain("Submit request");
-    expect(workspace).toContain("Mark resolved");
-    expect(workspace).toContain("Acknowledge reminder");
-    expect(workspace).not.toContain("DATABASE_URL");
+    expect(experience).toContain("Open demo workspace");
+    expect(experience).toContain("Commercial demo database");
+    expect(experience).toContain("never connected to live SaaS");
+    expect(experience).not.toContain("InteractiveWorkspaceExperience");
+    expect(experience).toContain("Profile & security");
+    expect(experience).toContain("People and access");
     expect(home).toContain("maintainr-fade-left");
     expect(home).toContain("maintainr-fade-right");
     expect(styles).toContain("prefers-reduced-motion: no-preference");
     expect(styles).toContain("--maintainr-dark-copy");
     expect(styles).toContain(".bg-\\[\\#172033\\]");
     expect(styles).toContain("color: #ffffff !important");
+    expect(styles).toContain("text-slate-600");
   });
 });

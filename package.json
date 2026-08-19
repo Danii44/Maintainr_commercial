@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "build:netlify": "vite build && esbuild netlify/functions/quote-request.ts --platform=node --packages=external --bundle --format=esm --outdir=netlify/functions-build",
+    "build:netlify": "vite build && esbuild netlify/functions/*.ts --platform=node --packages=external --bundle --format=esm --outdir=netlify/functions-build",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "echo 'Apply COMMERCIAL_SCHEMA.sql only to the separate commercial database.'"
+    "db:push": "echo 'Apply COMMERCIAL_SCHEMA.sql and COMMERCIAL_DEMO_SCHEMA.sql only to the separate commercial/demo database.'",
+    "demo:setup": "node scripts/setup-commercial-demo.mjs",
+    "demo:reset": "DEMO_RESET=true node scripts/setup-commercial-demo.mjs",
+    "demo:verify": "node scripts/verify-commercial-demo-workflow.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",

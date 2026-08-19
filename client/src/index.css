@@ -315,6 +315,12 @@ html:not(.dark) .maintainr-shell-header [class*="text-slate-300"] { color: #cbd5
 .maintainr-v3 .bg-\[\#172033\] [class*="text-slate-300"] { color: var(--maintainr-dark-copy) !important; }
 .maintainr-v3 .bg-\[\#172033\] [class*="text-\[\#8fe0d4\]"],
 .maintainr-v3 .bg-\[\#172033\] [class*="text-\[\#9eece0\]"] { color: #9eece0 !important; }
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) [class*="text-slate-400"],
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) [class*="text-slate-500"],
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) [class*="text-slate-600"] { color: #d6e1ee !important; }
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) :is(a, button):not(.bg-\[\#0f766e\]) { color: #f8fafc; }
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) :is(a, button):not(.bg-\[\#0f766e\]):hover { color: #9eece0; }
+.maintainr-v3 :is(.bg-\[\#172033\], .bg-\[\#0b1720\]) svg { color: currentColor; }
 html:not(.dark) .maintainr-v3-hero h1 { color: #ffffff !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-slate-300"] { color: #cbd5e1 !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-white"] { color: #ffffff !important; }

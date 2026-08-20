@@ -136,6 +136,7 @@
   --sidebar-accent-foreground: var(--maintainr-text);
   --sidebar-border: var(--maintainr-line);
   --sidebar-ring: var(--maintainr-focus);
+  color-scheme: dark;
 }
 
 @layer base {
@@ -264,6 +265,7 @@ html:not(.dark) .maintainr-ops-thread [class*="text-slate-300"] { color: #526176
 html:not(.dark) .maintainr-ops-thread [class*="text-white"] { color: #172033 !important; }
 html:not(.dark) .maintainr-ops-thread [class*="text-cyan-200"] { color: #0f766e !important; }
 html, body, #root { max-width: 100%; overflow-x: clip; }
+body { min-height: 100dvh; overflow-y: auto; }
 .commercial-conversion-rail > a { min-width: 0; }
 html:not(.dark) [class*="rgba(10,12,22"] { background-image: linear-gradient(110deg, rgba(255,255,255,.92), rgba(248,250,252,.32)) !important; }
 html:not(.dark) [class*="rgba(16,19,31"] { background-image: radial-gradient(circle at 90% 0%, rgba(34,211,238,.14), transparent 28%), linear-gradient(120deg, rgba(237,233,254,.88), rgba(255,255,255,.96)) !important; }
@@ -415,3 +417,84 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .maintainr-longform .maintainr-story-card:hover, .maintainr-longform .maintainr-role-card:hover, .maintainr-longform .maintainr-system-step:hover, .maintainr-longform .maintainr-foundation-card:hover { transform: translateY(-7px); border-color: #8bd7cc; box-shadow: 0 23px 46px rgba(15,118,110,.12); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .softec-maintainr *, .maintainr-v3 * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+/* Theme controls and dark-mode bridges use semantic tokens so the public site
+   and the isolated Product Experience never inherit light text on dark cards. */
+.maintainr-theme-toggle {
+  color: var(--maintainr-text);
+  border-color: var(--maintainr-line);
+  background: color-mix(in srgb, var(--maintainr-surface) 92%, transparent);
+}
+.maintainr-theme-toggle:hover { color: var(--maintainr-primary); background: var(--maintainr-surface-muted); border-color: color-mix(in srgb, var(--maintainr-primary) 42%, var(--maintainr-line)); }
+.dark .maintainr-theme-toggle { color: var(--maintainr-text); background: color-mix(in srgb, var(--maintainr-surface) 94%, transparent); border-color: var(--maintainr-line); }
+
+/* The commercial site intentionally contains editorial ink surfaces. In dark
+   mode, every paper/mint card becomes a readable operational surface instead
+   of retaining light-only text and borders. */
+.dark .maintainr-v3,
+.dark .softec-maintainr { background: var(--maintainr-canvas) !important; color: var(--maintainr-text); }
+.dark .softec-maintainr-hero,
+.dark .softec-page-hero { background: radial-gradient(circle at 15% 4%, rgba(104,184,223,.13), transparent 28%), radial-gradient(circle at 88% 12%, rgba(87,203,187,.14), transparent 30%), var(--maintainr-canvas) !important; }
+.dark .softec-maintainr-header,
+.dark .commercial-mobile-nav { background: color-mix(in srgb, var(--maintainr-surface) 92%, transparent) !important; color: var(--maintainr-text) !important; border-color: var(--maintainr-line) !important; }
+.dark .softec-maintainr-header a,
+.dark .softec-maintainr-header .maintainr-language-toggle,
+.dark .commercial-mobile-nav a,
+.dark .commercial-mobile-nav .maintainr-language-toggle { color: var(--maintainr-text-muted) !important; }
+.dark .softec-maintainr-header a:hover,
+.dark .commercial-mobile-nav a:hover,
+.dark .maintainr-language-toggle:hover { color: var(--maintainr-primary) !important; background: var(--maintainr-surface-muted) !important; }
+.dark .maintainr-v3 :is([class*="bg-[#f3f1ec]"], [class*="bg-[#d7f7f1]"], [class*="bg-[#dffaf5]"], [class*="bg-[#f5f7fb]"], [class*="bg-[#effbf9]"], [class*="bg-[#f8fbfb]"], [class*="bg-white"]) { background-color: var(--maintainr-surface) !important; border-color: var(--maintainr-line) !important; }
+.dark .maintainr-v3 [class*="bg-[#d7f7f1]"],
+.dark .maintainr-v3 [class*="bg-[#dffaf5]"],
+.dark .maintainr-v3 [class*="bg-[#effbf9]"],
+.dark .maintainr-v3 [class*="bg-[#f8fbfb]"] { background-color: var(--maintainr-surface-muted) !important; }
+.dark .maintainr-v3 :is([class*="text-[#172033]"], [class*="text-[#10212a]"], [class*="text-[#315653]"]) { color: var(--maintainr-text) !important; }
+.dark .maintainr-v3 :is([class*="text-[#526176]"], [class*="text-slate-600"], [class*="text-slate-700"]) { color: var(--maintainr-text-muted) !important; }
+.dark .maintainr-v3 :is([class*="border-slate-"], [class*="border-[#cfc8bd]"], [class*="border-[#87cfc5]"], [class*="border-[#b9e7df]"], [class*="border-[#cde7e3]"], [class*="border-[#dcefed]"]) { border-color: var(--maintainr-line) !important; }
+.dark .maintainr-v3 input,
+.dark .maintainr-v3 textarea,
+.dark .maintainr-v3 select { background: #102422 !important; color: var(--maintainr-text) !important; border-color: #3b5954 !important; }
+.dark .maintainr-v3 :is(input, textarea)::placeholder { color: #a8c3bd !important; }
+.dark .maintainr-v3 [class*="bg-[#0f766e]"] { color: #ffffff !important; }
+.dark .maintainr-v3 :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) { background-color: #091e1d !important; color: var(--maintainr-on-dark) !important; border-color: #31514b !important; }
+.dark .maintainr-v3 :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) [class*="text-slate-"] { color: var(--maintainr-on-dark-muted) !important; }
+
+/* Retain a clear navigation and a reachable menu while visitors scroll the
+   long public pages or work inside the dedicated Product Experience route. */
+.commercial-mobile-nav { -webkit-overflow-scrolling: touch; touch-action: pan-y; }
+
+/* The authenticated commercial experience deliberately adopts the same command
+   rail, utility header, metric hierarchy, and operational canvas as SaaS. It
+   changes only the data boundary: demo API records remain isolated. */
+.maintainr-v3:has(.maintainr-demo-shell) > .softec-maintainr-header,
+.maintainr-v3:has(.maintainr-demo-shell) > footer { display: none; }
+.maintainr-demo-shell { --demo-line: #d9e8e5; --demo-surface: #ffffff; --demo-copy: #56716d; background: #edf5f3; }
+.maintainr-demo-card { border: 1px solid var(--demo-line); background: var(--demo-surface); box-shadow: 0 12px 28px rgba(15, 74, 67, .045); }
+.maintainr-demo-field { border: 1px solid #cfe0dc; background: #ffffff; color: #172a27; outline: none; }
+.maintainr-demo-field:focus { border-color: #0f766e; box-shadow: 0 0 0 3px rgba(13, 148, 136, .12); }
+.maintainr-demo-utility { border: 1px solid #d9e8e5; background: rgba(255,255,255,.72); }
+html:not(.dark) .maintainr-demo-rail a { color: #f8fafc !important; }
+html:not(.dark) .maintainr-demo-rail-panel { background-color: rgba(255,255,255,.035) !important; color: #f8fafc !important; }
+html:not(.dark) .maintainr-demo-rail-panel:hover { background-color: rgba(255,255,255,.07) !important; }
+html:not(.dark) .maintainr-demo-rail-nav { background-color: transparent !important; border-color: transparent !important; }
+html:not(.dark) .maintainr-demo-rail-nav:not(.maintainr-demo-rail-nav-active),
+html:not(.dark) .maintainr-demo-rail-nav:not(.maintainr-demo-rail-nav-active) svg { color: #cbd5e1 !important; }
+html:not(.dark) .maintainr-demo-rail-nav-active { background-color: #ecfdf8 !important; border-color: #b7ebdf !important; color: #0f766e !important; }
+html:not(.dark) .maintainr-demo-rail-panel [class*="text-slate-"] { color: #b8cbc7 !important; }
+html:not(.dark) .maintainr-demo-rail-signout { background-color: transparent !important; color: #cbd5e1 !important; }
+html:not(.dark) .maintainr-demo-rail-signout:hover { background-color: rgba(255,255,255,.07) !important; color: #ffffff !important; }
+html:not(.dark) .maintainr-demo-focus,
+html:not(.dark) .maintainr-demo-focus h1,
+html:not(.dark) .maintainr-demo-focus h2,
+html:not(.dark) .maintainr-demo-focus h3,
+html:not(.dark) .maintainr-demo-focus p,
+html:not(.dark) .maintainr-demo-focus button { color: #ffffff !important; }
+html:not(.dark) .maintainr-demo-focus [class*="text-teal-"] { color: #ccfbf1 !important; }
+.dark .maintainr-demo-shell { --demo-line: rgba(255,255,255,.08); --demo-surface: #101521; --demo-copy: #a7bbb7; background: #080b12; }
+.dark .maintainr-demo-card { box-shadow: none; }
+.dark .maintainr-demo-field { border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: #ffffff; }
+.dark .maintainr-demo-utility { border-color: rgba(255,255,255,.08); background: rgba(255,255,255,.03); }
+html[dir="rtl"] .maintainr-demo-rail { left: auto; right: 0; }
+@media (min-width: 1024px) { html[dir="rtl"] .maintainr-demo-shell > main { padding-left: 0; padding-right: 18rem; } }
+@media (max-width: 1023px) { html[dir="rtl"] .maintainr-demo-rail.-translate-x-full { transform: translateX(100%); } }

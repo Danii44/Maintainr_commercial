@@ -51,6 +51,10 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("maintainr-fade-right");
     expect(styles).toContain("prefers-reduced-motion: no-preference");
     expect(styles).toContain("--maintainr-dark-copy");
+    expect(styles).toContain("--maintainr-on-dark");
+    expect(styles).toContain("--maintainr-on-dark-muted");
+    expect(styles).toContain("Deliberate dark editorial surfaces remain dark in light mode");
+    expect(styles).toContain('[class*="bg-white/"] :is(h1, h2, h3, h4, h5, h6, p, span, .text-white');
     expect(styles).toContain(".bg-\\[\\#172033\\]");
     expect(styles).toContain("color: #ffffff !important");
     expect(styles).toContain("text-slate-600");

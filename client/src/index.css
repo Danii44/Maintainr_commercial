@@ -54,6 +54,9 @@
   --maintainr-primary-strong: #05655f;
   --maintainr-accent: #2385b8;
   --maintainr-on-primary: #ffffff;
+  --maintainr-on-dark: #ffffff;
+  --maintainr-on-dark-muted: #d6e1ee;
+  --maintainr-on-dark-accent: #9eece0;
   --maintainr-focus: #0a8177;
   --primary: var(--maintainr-primary);
   --primary-foreground: var(--maintainr-on-primary);
@@ -346,6 +349,35 @@ html:not(.dark) .maintainr-shell-header [class*="text-slate-300"] { color: #cbd5
 html:not(.dark) .maintainr-v3-hero h1 { color: #ffffff !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-slate-300"] { color: #cbd5e1 !important; }
 html:not(.dark) .maintainr-v3-hero [class*="text-white"] { color: #ffffff !important; }
+
+/* Deliberate dark editorial surfaces remain dark in light mode. They must opt
+   out of the generic light-surface text bridge so headings, supporting copy,
+   links, and controls never inherit low-contrast ink colors. */
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) {
+  color: var(--maintainr-on-dark) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) :is(h1, h2, h3, h4, h5, h6, strong, .text-white) {
+  color: var(--maintainr-on-dark) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) :is([class*="text-slate-100"], [class*="text-slate-200"], [class*="text-slate-300"], [class*="text-slate-400"], [class*="text-slate-500"], [class*="text-slate-600"]) {
+  color: var(--maintainr-on-dark-muted) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) :is([class*="text-cyan-"], [class*="text-violet-"], [class*="text-[#8fe0d4]"], [class*="text-[#9eece0]"]) {
+  color: var(--maintainr-on-dark-accent) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) :is(a, button):not([class*="bg-[#0f766e]"]) {
+  color: var(--maintainr-on-dark) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) [class*="bg-white/"] {
+  color: var(--maintainr-text) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) [class*="bg-white/"] :is(h1, h2, h3, h4, h5, h6, p, span, .text-white, [class*="text-slate-"]) {
+  color: var(--maintainr-text) !important;
+}
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) [class*="bg-white/"] [class*="text-cyan-"],
+html:not(.dark) :is([class*="bg-[#172033]"], [class*="bg-[#0b1720]"]) [class*="bg-white/"] [class*="text-violet-"] {
+  color: var(--maintainr-primary) !important;
+}
 
 /* Softec-inspired Maintainr adaptation: a bright, spacious editorial SaaS canvas
    using Maintainr’s own teal and sky identity rather than external branding. */

@@ -418,6 +418,12 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) { .maintainr-longform .maintainr-story-card:hover, .maintainr-longform .maintainr-role-card:hover, .maintainr-longform .maintainr-system-step:hover, .maintainr-longform .maintainr-foundation-card:hover { transform: translateY(-7px); border-color: #8bd7cc; box-shadow: 0 23px 46px rgba(15,118,110,.12); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .softec-maintainr *, .maintainr-v3 * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
+/* Commercial light-surface contrast guardrail: public explanatory copy must
+   remain legible over the paper, mint, and screenshot-led product sections. */
+html:not(.dark) .maintainr-v3 :is(.maintainr-dashboard-showcase, .softec-maintainr .maintainr-story-card, .softec-maintainr .maintainr-role-card, .softec-maintainr .maintainr-system-step, .softec-maintainr .maintainr-foundation-card, .softec-maintainr .maintainr-home-faq) :is(p, li, span[class*="text-slate"], [class*="text-[#526176]"]) { color: #405965 !important; }
+html:not(.dark) .maintainr-v3 :is(.maintainr-dashboard-showcase, .softec-maintainr .maintainr-story-card, .softec-maintainr .maintainr-role-card, .softec-maintainr .maintainr-system-step, .softec-maintainr .maintainr-foundation-card, .softec-maintainr .maintainr-home-faq) :is(h1, h2, h3, h4, h5, h6, .font-semibold, .font-bold) { color: #172033 !important; }
+html:not(.dark) .maintainr-v3 .maintainr-dashboard-showcase [class*="text-[#0f766e]"] { color: #0a675f !important; }
+
 /* Theme controls and dark-mode bridges use semantic tokens so the public site
    and the isolated Product Experience never inherit light text on dark cards. */
 .maintainr-theme-toggle {

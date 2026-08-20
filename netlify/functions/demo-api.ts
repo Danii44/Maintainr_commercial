@@ -1,6 +1,7 @@
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import type { Handler, HandlerEvent } from "@netlify/functions";
 import { Pool, type PoolClient } from "pg";
+import { config as loadDotenv } from "dotenv";
 
 type DemoRole = "PROPERTY_MANAGER" | "TENANT" | "TECHNICIAN" | "FLAT_OWNER";
 type Account = { id: number; email: string; displayName: string; role: DemoRole; phone: string | null; avatarUrl: string | null; unitCode: string };
@@ -51,6 +52,10 @@ function hashPassword(password: string) {
 }
 
 function getPool() {
+  if (!process.env.COMMERCIAL_DATABASE_URL) {
+    loadDotenv({ path: "/vercel/share/.env.project", override: false });
+    loadDotenv({ path: ".env.development.local", override: false });
+  }
   const connectionString = process.env.COMMERCIAL_DATABASE_URL;
   if (!connectionString) throw new Error("Commercial demo database is not configured");
   return new Pool({ connectionString, ssl: { rejectUnauthorized: false }, max: 2, connectionTimeoutMillis: 8_000 });

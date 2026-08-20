@@ -3,8 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
+import { config as loadDotenv } from "dotenv";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
-import { handler as demoApiHandler } from "./netlify/functions/demo-api";
+
+loadDotenv({ path: "/vercel/share/.env.project", override: false });
+loadDotenv({ path: path.resolve(import.meta.dirname, ".env.development.local"), override: false });
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -155,6 +158,7 @@ function vitePluginCommercialDemoApi(): Plugin {
     name: "commercial-demo-api",
     configureServer(server: ViteDevServer) {
       server.middlewares.use("/.netlify/functions/demo-api", async (req, res) => {
+        const { handler: demoApiHandler } = await import("./netlify/functions/demo-api");
         let payload = "";
         for await (const chunk of req) payload += chunk.toString();
         const headers = Object.fromEntries(Object.entries(req.headers).map(([key, value]) => [key, Array.isArray(value) ? value.join(",") : value ?? ""]));

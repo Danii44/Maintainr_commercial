@@ -434,6 +434,36 @@ html:not(.dark) .maintainr-v3 main :is(a, button)[class*="bg-[#0b1720]"]:hover {
 .maintainr-v3 .softec-page-hero h1, .maintainr-v3 .softec-page-hero h2 { font-weight: 600; letter-spacing: -.065em; }
 .maintainr-v3 .softec-page-hero p { max-width: 42rem; }
 
+/* Modern 3D visual layer: CSS perspective and composited transforms add depth
+   to authentic product imagery without canvas/WebGL overhead. */
+.maintainr-3d-depth-field { isolation: isolate; }
+.maintainr-3d-stage, .softec-page-hero .mx-auto.mt-14.max-w-6xl, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl { perspective: 1600px; transform-style: preserve-3d; }
+.maintainr-3d-dashboard-frame { isolation: isolate; transform: rotateX(4deg) rotateY(-4deg) translateZ(0); transform-style: preserve-3d; transform-origin: 45% 58%; transition: transform 700ms cubic-bezier(.23,1,.32,1), box-shadow 700ms cubic-bezier(.23,1,.32,1); will-change: transform; }
+.maintainr-3d-dashboard-frame::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; background: linear-gradient(116deg, rgba(255,255,255,.42), transparent 23%, transparent 72%, rgba(255,255,255,.18)); mix-blend-mode: screen; }
+.maintainr-3d-dashboard-frame::after { content: ""; position: absolute; z-index: -1; inset: 10% -4% -10%; border-radius: 2.25rem; background: radial-gradient(ellipse at 36% 55%, rgba(15,118,110,.3), transparent 67%); filter: blur(20px); transform: translateZ(-40px); }
+.maintainr-3d-floating-chip { transform: translateZ(54px) rotateY(6deg); box-shadow: 0 14px 28px rgba(15,74,67,.15) !important; }
+.maintainr-3d-floating-panel { transform: translateZ(70px) rotateY(5deg); box-shadow: 0 28px 46px rgba(4,65,61,.34) !important; }
+.maintainr-3d-mobile-frame { transform: translateZ(90px) rotateY(12deg) rotateX(-3deg); transform-style: preserve-3d; transition: transform 700ms cubic-bezier(.23,1,.32,1), box-shadow 700ms cubic-bezier(.23,1,.32,1); will-change: transform; }
+.maintainr-3d-glass-panel { transform: translateZ(26px) rotateY(2deg); transform-style: preserve-3d; box-shadow: 0 28px 52px rgba(23,32,51,.1) !important; transition: transform 500ms cubic-bezier(.23,1,.32,1), box-shadow 500ms cubic-bezier(.23,1,.32,1); }
+.maintainr-3d-mini-card { transform: translateZ(0); transition: transform 400ms cubic-bezier(.23,1,.32,1), box-shadow 400ms cubic-bezier(.23,1,.32,1); }
+.softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative { transform: rotateX(4deg) rotateY(-3deg) !important; transform-style: preserve-3d; transition: transform 700ms cubic-bezier(.23,1,.32,1), box-shadow 700ms cubic-bezier(.23,1,.32,1); will-change: transform; }
+.softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative::after, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative::after { content: ""; position: absolute; inset: 14% -2.5rem -2.5rem; z-index: -1; border-radius: 2.5rem; background: radial-gradient(ellipse at 48% 80%, rgba(15,118,110,.2), transparent 68%); filter: blur(18px); transform: translateZ(-36px); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .maintainr-3d-stage:hover .maintainr-3d-dashboard-frame { transform: rotateX(1.5deg) rotateY(-1deg) translateY(-10px) translateZ(12px); box-shadow: 0 42px 80px rgba(15,118,110,.24) !important; }
+  .maintainr-3d-stage:hover .maintainr-3d-mobile-frame { transform: translateZ(120px) rotateY(6deg) rotateX(-1deg) translateY(-10px); }
+  .maintainr-3d-glass-panel:hover { transform: translateZ(38px) rotateY(-1.5deg) translateY(-6px); box-shadow: 0 34px 66px rgba(23,32,51,.14) !important; }
+  .maintainr-3d-mini-card:hover { transform: translateY(-9px) translateZ(18px) rotateX(2deg); box-shadow: 0 24px 48px rgba(15,118,110,.15); }
+  .softec-page-hero .mx-auto.mt-14.max-w-6xl:hover > .relative, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl:hover > .relative { transform: rotateX(1deg) rotateY(-.75deg) translateY(-10px) !important; }
+}
+@media (max-width: 1023px) {
+  .maintainr-3d-dashboard-frame, .maintainr-3d-mobile-frame, .maintainr-3d-glass-panel, .softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative { transform: none !important; }
+  .maintainr-3d-dashboard-frame::after, .softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative::after, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative::after { opacity: .62; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .maintainr-3d-dashboard-frame, .maintainr-3d-mobile-frame, .maintainr-3d-glass-panel, .maintainr-3d-mini-card, .softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative { transition: none !important; transform: none !important; }
+  .maintainr-3d-dashboard-frame::before, .maintainr-3d-dashboard-frame::after, .softec-page-hero .mx-auto.mt-14.max-w-6xl > .relative::after, .softec-maintainr-hero .mx-auto.mt-13.max-w-6xl > .relative::after { display: none; }
+}
+
 /* Theme controls and dark-mode bridges use semantic tokens so the public site
    and the isolated Product Experience never inherit light text on dark cards. */
 .maintainr-theme-toggle {

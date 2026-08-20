@@ -424,6 +424,16 @@ html:not(.dark) .maintainr-v3 :is(.maintainr-dashboard-showcase, .softec-maintai
 html:not(.dark) .maintainr-v3 :is(.maintainr-dashboard-showcase, .softec-maintainr .maintainr-story-card, .softec-maintainr .maintainr-role-card, .softec-maintainr .maintainr-system-step, .softec-maintainr .maintainr-foundation-card, .softec-maintainr .maintainr-home-faq) :is(h1, h2, h3, h4, h5, h6, .font-semibold, .font-bold) { color: #172033 !important; }
 html:not(.dark) .maintainr-v3 .maintainr-dashboard-showcase [class*="text-[#0f766e]"] { color: #0a675f !important; }
 
+/* Secondary-page consistency layer: all public editorial routes share the
+   same readable copy tone, evergreen actions, soft mint forms, and cool-gray lines. */
+html:not(.dark) .maintainr-v3 main [class*="text-[#526176]"] { color: #405965 !important; }
+html:not(.dark) .maintainr-v3 main [class*="border-[#cfc8bd]"] { border-color: #d3e4e0 !important; }
+html:not(.dark) .maintainr-v3 main [class*="bg-[#e8e4dc]"] { background: #f6fbfa !important; border: 1px solid #d3e4e0; }
+html:not(.dark) .maintainr-v3 main :is(a, button)[class*="bg-[#0b1720]"] { background: #0f766e !important; color: #ffffff !important; }
+html:not(.dark) .maintainr-v3 main :is(a, button)[class*="bg-[#0b1720]"]:hover { background: #115e59 !important; color: #ffffff !important; }
+.maintainr-v3 .softec-page-hero h1, .maintainr-v3 .softec-page-hero h2 { font-weight: 600; letter-spacing: -.065em; }
+.maintainr-v3 .softec-page-hero p { max-width: 42rem; }
+
 /* Theme controls and dark-mode bridges use semantic tokens so the public site
    and the isolated Product Experience never inherit light text on dark cards. */
 .maintainr-theme-toggle {

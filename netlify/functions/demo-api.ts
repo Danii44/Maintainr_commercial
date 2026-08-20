@@ -9,6 +9,7 @@ type DemoReminder = { id: number; title: string; description: string; unit: stri
 type DemoInquiry = { id: number; kind: "INQUIRY" | "COMPLAINT"; status: "OPEN" | "IN_REVIEW" | "RESOLVED" | "CLOSED"; subject: string; body: string; unit: string | null; createdAt: string };
 type DemoAppointment = { id: number; title: string; status: "SCHEDULED" | "CONFIRMED" | "COMPLETED" | "CANCELLED"; scheduledStart: string; scheduledEnd: string; unit: string | null };
 type DemoConversation = { id: number; subject: string; kind: "GENERAL" | "TICKET" | "INQUIRY"; updatedAt: string };
+type DemoNotification = { id: number; type: string; title: string; body: string | null; href: string | null; readAt: string | null; createdAt: string };
 
 const COOKIE_NAME = "maintainr_demo_session";
 const SESSION_MS = 1000 * 60 * 60 * 8;
@@ -100,7 +101,18 @@ async function stateFor(client: PoolClient, account: Account) {
   const conversations = await client.query<DemoConversation>(account.role === "PROPERTY_MANAGER" ? "select id, subject, kind, updated_at as \"updatedAt\" from demo_conversations order by updated_at desc" : "select c.id, c.subject, c.kind, c.updated_at as \"updatedAt\" from demo_conversations c join demo_conversation_participants p on p.conversation_id = c.id where p.account_id = $1 order by c.updated_at desc", account.role === "PROPERTY_MANAGER" ? [] : [account.id]);
   const technicians = account.role === "PROPERTY_MANAGER" ? await client.query<{ id: number; name: string }>("select id, display_name as name from demo_accounts where role = 'TECHNICIAN' and is_active = true order by id") : { rows: [] };
   const people = account.role === "PROPERTY_MANAGER" ? await client.query<{ id: number; email: string; name: string; role: DemoRole; unitCode: string; isActive: boolean }>("select id, email, display_name as name, role, unit_code as \"unitCode\", is_active as \"isActive\" from demo_accounts order by role, display_name") : { rows: [] };
-  return { account: publicAccount(account), tickets: tickets.rows, reminders: reminders.rows, inquiries: inquiries.rows, appointments: appointments.rows, conversations: conversations.rows, technicians: technicians.rows, people: people.rows, isolated: true };
+  const notifications = await client.query<DemoNotification>("select id, type, title, body, href, read_at as \"readAt\", created_at as \"createdAt\" from demo_notifications where account_id = $1 order by created_at desc limit 30", [account.id]);
+  return { account: publicAccount(account), tickets: tickets.rows, reminders: reminders.rows, inquiries: inquiries.rows, appointments: appointments.rows, conversations: conversations.rows, technicians: technicians.rows, people: people.rows, notifications: notifications.rows, isolated: true };
+}
+
+async function addDemoNotifications(client: PoolClient, accountIds: number[], type: string, title: string, body: string, href = "requests") {
+  const recipientIds = Array.from(new Set(accountIds.map((id) => Number(id)).filter((id) => Number.isInteger(id) && id > 0)));
+  await Promise.all(recipientIds.map((accountId) => client.query("insert into demo_notifications (account_id, type, title, body, href) values ($1,$2,$3,$4,$5)", [accountId, type, title, body, href])));
+}
+
+async function managerAccountIds(client: PoolClient) {
+  const managers = await client.query<{ id: number }>("select id from demo_accounts where role = 'PROPERTY_MANAGER' and is_active = true");
+  return managers.rows.map((manager) => Number(manager.id));
 }
 
 function canManage(role: DemoRole) { return role === "PROPERTY_MANAGER"; }
@@ -135,6 +147,16 @@ export const handler: Handler = async (event) => {
     const account = await currentAccount(client, event);
     if (!account) return json(401, { error: "Please sign in to the isolated demo workspace." });
     if (action === "session") return json(200, await stateFor(client, account));
+    if (action === "mark-notification-read") {
+      const notificationId = Number(input.notificationId);
+      if (!Number.isInteger(notificationId)) return json(400, { error: "Choose a valid demo notification." });
+      await client.query("update demo_notifications set read_at = now() where id = $1 and account_id = $2", [notificationId, account.id]);
+      return json(200, await stateFor(client, account));
+    }
+    if (action === "mark-all-notifications-read") {
+      await client.query("update demo_notifications set read_at = now() where account_id = $1 and read_at is null", [account.id]);
+      return json(200, await stateFor(client, account));
+    }
     if (action === "update-profile") {
       const name = typeof input.name === "string" ? input.name.trim() : "";
       const phone = typeof input.phone === "string" ? input.phone.trim() : "";
@@ -187,15 +209,17 @@ export const handler: Handler = async (event) => {
       if (title.length < 3 || description.length < 10) return json(400, { error: "Add a title and at least 10 characters of detail." });
       const created = await client.query<{ id: number }>("insert into demo_tickets (title, description, unit_code, priority, submitted_by_id) values ($1,$2,'A-204','MEDIUM',$3) returning id", [title, description, account.id]);
       await client.query("insert into demo_ticket_activity (ticket_id, actor_id, action, message) values ($1,$2,'CREATED','Resident submitted a demo request')", [created.rows[0].id, account.id]);
+      await addDemoNotifications(client, (await managerAccountIds(client)).filter((managerId) => managerId !== account.id), "TICKET_CREATED", `New demo request #${created.rows[0].id}`, title, "requests");
       return json(200, await stateFor(client, account));
     }
     if (action === "assign-ticket") {
       if (!canManage(account.role)) return json(403, { error: "Only the demo manager can assign a request." });
       const ticketId = Number(input.ticketId); const technicianId = Number(input.technicianId);
       if (!Number.isInteger(ticketId) || !Number.isInteger(technicianId)) return json(400, { error: "Choose a valid request and technician." });
-      const assignment = await client.query("update demo_tickets set assigned_to_id = $1, status = 'ASSIGNED', updated_at = now() where id = $2 and status = 'OPEN' returning id", [technicianId, ticketId]);
-      if (!assignment.rowCount) return json(409, { error: "This demo request is no longer available for assignment." });
+      const assignment = await client.query<{ id: number; title: string; submittedById: number }>("update demo_tickets set assigned_to_id = $1, status = 'ASSIGNED', updated_at = now() where id = $2 and status = 'OPEN' returning id, title, submitted_by_id as \"submittedById\"", [technicianId, ticketId]);
+      if (!assignment.rowCount || !assignment.rows[0]) return json(409, { error: "This demo request is no longer available for assignment." });
       await client.query("insert into demo_ticket_activity (ticket_id, actor_id, action, message) values ($1,$2,'ASSIGNED','Manager assigned the demo technician')", [ticketId, account.id]);
+      await addDemoNotifications(client, [technicianId, assignment.rows[0].submittedById].filter((recipientId) => recipientId !== account.id), "TICKET_ASSIGNED", `Demo ticket #${ticketId} assigned`, `${assignment.rows[0].title} is ready for the next action.`, "requests");
       return json(200, await stateFor(client, account));
     }
     if (action === "update-ticket") {
@@ -203,9 +227,10 @@ export const handler: Handler = async (event) => {
       const ticketId = Number(input.ticketId); const nextStatus = input.status;
       if (!Number.isInteger(ticketId) || (nextStatus !== "IN_PROGRESS" && nextStatus !== "RESOLVED")) return json(400, { error: "Choose a valid demo work status." });
       const permittedCurrent = nextStatus === "IN_PROGRESS" ? "ASSIGNED" : "IN_PROGRESS";
-      const result = await client.query("update demo_tickets set status = $1::varchar, resolution_notes = case when $1::text = 'RESOLVED' then 'Resolution recorded in the isolated demo workspace.' else resolution_notes end, updated_at = now() where id = $2 and assigned_to_id = $3 and status = $4 returning id", [nextStatus, ticketId, account.id, permittedCurrent]);
-      if (!result.rowCount) return json(409, { error: "This demo ticket cannot move to that status now." });
+      const result = await client.query<{ id: number; title: string; submittedById: number }>("update demo_tickets set status = $1::varchar, resolution_notes = case when $1::text = 'RESOLVED' then 'Resolution recorded in the isolated demo workspace.' else resolution_notes end, updated_at = now() where id = $2 and assigned_to_id = $3 and status = $4 returning id, title, submitted_by_id as \"submittedById\"", [nextStatus, ticketId, account.id, permittedCurrent]);
+      if (!result.rowCount || !result.rows[0]) return json(409, { error: "This demo ticket cannot move to that status now." });
       await client.query("insert into demo_ticket_activity (ticket_id, actor_id, action, message) values ($1,$2,$3,'Technician updated the demo workflow')", [ticketId, account.id, nextStatus]);
+      await addDemoNotifications(client, [result.rows[0].submittedById, ...(await managerAccountIds(client))].filter((recipientId) => recipientId !== account.id), nextStatus === "RESOLVED" ? "TICKET_RESOLVED" : "STATUS_CHANGED", `Demo ticket #${ticketId} is now ${nextStatus.replace("_", " ")}`, `${result.rows[0].title} was updated by the assigned demo technician.`, "requests");
       return json(200, await stateFor(client, account));
     }
     if (action === "acknowledge-reminder") {

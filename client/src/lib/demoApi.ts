@@ -6,7 +6,8 @@ export type DemoPerson = { id: number; email: string; name: string; role: DemoRo
 export type DemoInquiry = { id: number; kind: "INQUIRY" | "COMPLAINT"; status: "OPEN" | "IN_REVIEW" | "RESOLVED" | "CLOSED"; subject: string; body: string; unit: string | null; createdAt: string };
 export type DemoAppointment = { id: number; title: string; status: "SCHEDULED" | "CONFIRMED" | "COMPLETED" | "CANCELLED"; scheduledStart: string; scheduledEnd: string; unit: string | null };
 export type DemoConversation = { id: number; subject: string; kind: "GENERAL" | "TICKET" | "INQUIRY"; updatedAt: string };
-export type DemoState = { account: DemoAccount; tickets: DemoTicket[]; reminders: DemoReminder[]; inquiries: DemoInquiry[]; appointments: DemoAppointment[]; conversations: DemoConversation[]; technicians: { id: number; name: string }[]; people: DemoPerson[]; isolated: true };
+export type DemoNotification = { id: number; type: string; title: string; body: string | null; href: string | null; readAt: string | null; createdAt: string };
+export type DemoState = { account: DemoAccount; tickets: DemoTicket[]; reminders: DemoReminder[]; inquiries: DemoInquiry[]; appointments: DemoAppointment[]; conversations: DemoConversation[]; technicians: { id: number; name: string }[]; people: DemoPerson[]; notifications: DemoNotification[]; isolated: true };
 
 export async function demoRequest(action: string, payload: Record<string, unknown> = {}): Promise<DemoState> {
   const response = await fetch("/.netlify/functions/demo-api", { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify({ action, ...payload }) });

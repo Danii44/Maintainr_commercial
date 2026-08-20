@@ -514,3 +514,43 @@ html[dir="rtl"] .maintainr-demo-rail { left: auto; right: 0; }
 html[dir="rtl"] .maintainr-dashboard-rail { left:auto; right:0; border-left:0 !important; border-right:1px solid rgba(255,255,255,.08) !important; }
 @media (max-width:1023px) { .maintainr-dashboard-header { min-height:64px; } html[dir="rtl"] .maintainr-dashboard-main.lg\:pl-72 { padding-right:0; } }
 @media (prefers-reduced-motion:reduce) { .maintainr-dashboard-rail a, .maintainr-dashboard-rail button, .maintainr-dashboard-header a, .maintainr-dashboard-header button { transition:none !important; } }
+
+/* Unified dashboard components: shared action, secondary-control, table, and
+   feedback styling used by the commercial demo and the live SaaS workspace. */
+.maintainr-dashboard-shell {
+  --maintainr-action: #0f766e;
+  --maintainr-action-hover: #115e59;
+  --maintainr-action-foreground: #ffffff;
+  --maintainr-control-surface: #ffffff;
+  --maintainr-control-border: #cfe0dc;
+  --maintainr-control-text: #0f766e;
+  --maintainr-row-hover: #f2fbf8;
+}
+.maintainr-dashboard-shell :is(button, a)[class*="bg-teal-600"][class*="text-white"],
+.maintainr-dashboard-shell :is(button, a)[class*="bg-teal-700"],
+.maintainr-dashboard-shell :is(button, a)[class*="bg-sky-600"],
+.maintainr-dashboard-shell :is(button, a)[class*="bg-sky-700"] {
+  background: var(--maintainr-action) !important;
+  color: var(--maintainr-action-foreground) !important;
+  border-color: transparent !important;
+  box-shadow: 0 8px 18px rgba(15, 118, 110, .16);
+}
+.maintainr-dashboard-shell :is(button, a)[class*="bg-teal-600"]:hover,
+.maintainr-dashboard-shell :is(button, a)[class*="bg-teal-700"]:hover,
+.maintainr-dashboard-shell :is(button, a)[class*="bg-sky-600"]:hover,
+.maintainr-dashboard-shell :is(button, a)[class*="bg-sky-700"]:hover {
+  background: var(--maintainr-action-hover) !important;
+  color: var(--maintainr-action-foreground) !important;
+}
+.maintainr-dashboard-shell .maintainr-demo-utility,
+.maintainr-dashboard-shell :is(button, a)[class*="border-[#cfe0dc]"][class*="bg-white"] {
+  background: var(--maintainr-control-surface) !important;
+  border-color: var(--maintainr-control-border) !important;
+  color: var(--maintainr-control-text) !important;
+  box-shadow: 0 4px 12px rgba(15, 74, 67, .05);
+}
+.maintainr-dashboard-shell .maintainr-demo-card { border-color: var(--maintainr-line) !important; border-radius: 1.15rem; }
+.maintainr-dashboard-shell .maintainr-demo-card > div:first-child { background: linear-gradient(90deg, rgba(255,255,255,.94), rgba(234,246,243,.75)); }
+.maintainr-dashboard-shell .maintainr-demo-card [class*="divide-"] > *:hover { background: var(--maintainr-row-hover); }
+.dark .maintainr-dashboard-shell .maintainr-demo-utility { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.1) !important; color: #d6e1ee !important; }
+html:not(.dark) .maintainr-dashboard-shell .maintainr-demo-utility { background: #ffffff !important; border-color: var(--maintainr-control-border) !important; color: var(--maintainr-control-text) !important; }

@@ -1,25 +1,69 @@
 # Maintainr Commercial
 
-Maintainr Commercial is the standalone public product website for Maintainr. It provides bilingual English/Arabic product content, a safe fictional interactive demo dashboard, product and solution pages, FAQs, insights, contact paths, and a real quotation-request form.
+Maintainr Commercial is the standalone bilingual public website for the Maintainr product. It explains the platform, provides public product and quotation paths, and includes an isolated demonstration environment. It is not the customer SaaS application.
 
-## Strict separation from the SaaS product
+> **Database boundary:** This repository must use only `COMMERCIAL_DATABASE_URL`. It must never use the SaaS `DATABASE_URL`, SaaS sessions, customer tickets, customer media, production users, or production workspace data.
 
-This repository is deployed separately from [`Danii44/Maintainr_Saas`](https://github.com/Danii44/Maintainr_Saas). It does not contain or connect to customer workspaces, SaaS authentication, production tickets, media, reminder records, customer storage, or the SaaS PostgreSQL database.
+## How the product works
 
-| Commercial responsibility | Boundary |
-| --- | --- |
-| Marketing pages and demo dashboard | Browser-only fictional sample activity; no persistence and no SaaS API calls. |
-| Quotation requests | Stored only in a separate commercial PostgreSQL/Supabase project through `COMMERCIAL_DATABASE_URL`. |
-| SaaS conversion | Public links use `VITE_SAAS_APP_URL` to send a visitor to the real SaaS `/create-workspace` or `/sign-in` route. |
+| Visitor path | What happens |
+|---|---|
+| Explore the website | The visitor reads bilingual English/Arabic product, workflow, role, security, FAQ, and company information. |
+| Try demo | The visitor opens the isolated `/experience` journey and can explore role-aware sample workflows without accessing customer data. |
+| Request a quotation | The visitor submits business contact and portfolio details to the commercial-only quotation endpoint. |
+| Create a workspace | The public site sends the visitor to the separately deployed SaaS application at `/create-workspace`. |
+| Existing customer sign-in | The public site sends the visitor to the separately deployed SaaS application at `/sign-in`. |
 
-## Deploy on Netlify
+The commercial application does not manage customer work orders. The standalone SaaS at `Danii44/Maintainr_Saas` handles authentication, customer workspaces, maintenance operations, media, reminders, and customer data.
 
-1. Create a **separate** PostgreSQL or Supabase project for commercial quote enquiries.
-2. Apply `COMMERCIAL_SCHEMA.sql` only to that commercial database.
-3. Create Netlify environment variables from `.env.example`. `COMMERCIAL_DATABASE_URL` is server-only; `VITE_SAAS_APP_URL` is a public URL and never contains credentials.
-4. Deploy with `pnpm build:netlify`. Set `dist/public` as the publish directory and `netlify/functions` as the Functions directory.
-5. Confirm the demo works without a database connection, submit one quotation request, and verify the real SaaS links navigate to the production application domain.
+## Required services
 
-## Demo safety
+You need Node.js 20 or later, pnpm, and a separate PostgreSQL database only if you want quotation persistence or the database-backed demo administration workflow. You also need the public URL of the independently deployed SaaS application.
 
-The `/demo` route is an interactive visual dashboard that resets in the visitor’s browser. It intentionally cannot create a live SaaS workspace, read a customer ticket, attach a customer file, send a message, export a record, or invoke the SaaS API.
+## Install the commercial database
+
+Create a dedicated commercial PostgreSQL database. Do not reuse the SaaS database. Apply the quotation schema, then the isolated demo schema:
+
+```bash
+psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f COMMERCIAL_SCHEMA.sql
+psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f COMMERCIAL_DEMO_SCHEMA.sql
+```
+
+`COMMERCIAL_SCHEMA.sql` stores quotation requests only. `COMMERCIAL_DEMO_SCHEMA.sql` stores isolated sample demo accounts and workflow records only. Neither file contains or should receive SaaS customer data.
+
+## Configure environment values
+
+Copy `.env.example` for local reference. Place real values in the host's server-side secret manager; never commit them.
+
+| Variable | Use |
+|---|---|
+| `VITE_SAAS_APP_URL` | Public URL of the separately deployed SaaS application; never a credential. |
+| `COMMERCIAL_DATABASE_URL` | Server-only database URL for commercial quotation and demo data. |
+| `DEMO_DEFAULT_PASSWORD` | Server-only password used only to provision disposable demo accounts. It must never match a live SaaS password. |
+
+## Local commands
+
+```bash
+pnpm install
+pnpm check
+pnpm test
+pnpm build
+pnpm build:netlify
+pnpm demo:setup
+pnpm demo:verify
+pnpm dev
+```
+
+Use `pnpm demo:reset` only against the commercial/demo database when you intentionally want to restore the labelled safe sample state. It never targets the SaaS database.
+
+## Publish safely
+
+For Netlify, use the existing `netlify.toml`, run `pnpm build:netlify`, publish `dist/public`, and deploy `netlify/functions`. Before publishing, test every navigation link, quotation submission, `/experience`, Arabic RTL, mobile layout, and the two SaaS handoff links. Confirm that `VITE_SAAS_APP_URL` points to the live SaaS domain and that no commercial secret appears in browser code.
+
+## Security requirements
+
+Collect only necessary business contact and portfolio data in quotation requests. Keep `COMMERCIAL_DATABASE_URL` and demo setup credentials server-side. Do not add customer reviews, customer names, production screenshots containing customer data, SaaS authentication cookies, or customer records to this repository.
+
+## Kept project structure
+
+The repository retains only active application, deployment, demo, test, and installation assets: `client/`, `netlify/`, `scripts/`, `tests/`, `.env.example`, the two non-duplicate SQL installers, `netlify.toml`, and package/config files. Generated output, credentials, runtime logs, duplicate SQL installers, and superseded documentation are not retained.

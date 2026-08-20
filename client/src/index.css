@@ -554,3 +554,14 @@ html[dir="rtl"] .maintainr-dashboard-rail { left:auto; right:0; border-left:0 !i
 .maintainr-dashboard-shell .maintainr-demo-card [class*="divide-"] > *:hover { background: var(--maintainr-row-hover); }
 .dark .maintainr-dashboard-shell .maintainr-demo-utility { background: rgba(255,255,255,.04) !important; border-color: rgba(255,255,255,.1) !important; color: #d6e1ee !important; }
 html:not(.dark) .maintainr-dashboard-shell .maintainr-demo-utility { background: #ffffff !important; border-color: var(--maintainr-control-border) !important; color: var(--maintainr-control-text) !important; }
+
+/* Mobile usability: all icon-only dashboard controls meet a 44px touch target
+   and the fixed rail retains a comfortable safe-area clearance. */
+.maintainr-dashboard-header :is(button, a)[aria-label],
+.maintainr-dashboard-rail :is(button, a)[aria-label] { min-width: 2.75rem; min-height: 2.75rem; }
+@supports (padding: max(0px)) {
+  @media (max-width: 1023px) {
+    .maintainr-dashboard-rail { padding-bottom: max(1.25rem, calc(1.25rem + env(safe-area-inset-bottom))) !important; }
+    .maintainr-dashboard-main > :last-child { padding-bottom: max(7rem, calc(5rem + env(safe-area-inset-bottom))) !important; }
+  }
+}

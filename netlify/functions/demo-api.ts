@@ -185,7 +185,7 @@ export const handler: Handler = async (event) => {
       const title = typeof input.title === "string" ? input.title.trim() : "";
       const description = typeof input.description === "string" ? input.description.trim() : "";
       if (title.length < 3 || description.length < 10) return json(400, { error: "Add a title and at least 10 characters of detail." });
-      const created = await client.query<{ id: number }>("insert into demo_tickets (title, description, unit_code, priority, submitted_by_id) values ($1,$2,'A-204','MEDIUM',$3) returning id", [title, description, account.id]);
+      const created = await client.query<{ id: number }>("insert into demo_tickets (title, description, unit_code, priority, submitted_by_id) values ($1,$2,$3,'MEDIUM',$4) returning id", [title, description, account.unitCode, account.id]);
       await client.query("insert into demo_ticket_activity (ticket_id, actor_id, action, message) values ($1,$2,'CREATED','Resident submitted a demo request')", [created.rows[0].id, account.id]);
       return json(200, await stateFor(client, account));
     }

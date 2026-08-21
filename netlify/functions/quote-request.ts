@@ -5,12 +5,38 @@ const allowedCategories = new Set(["MULTI_FAMILY", "RESIDENTIAL", "COMMERCIAL", 
 const allowedSizes = new Set(["1-10", "11-50", "51-250", "251-1000", "1000+"]);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const securityHeaders = {
+  "content-security-policy": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'",
+  "cross-origin-opener-policy": "same-origin",
+  "cross-origin-resource-policy": "same-site",
+  "origin-agent-cluster": "?1",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), geolocation=(), microphone=(), payment=(), usb=()",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "SAMEORIGIN",
+  "x-robots-tag": "noindex, nofollow",
+};
+
+function isTrustedSameOriginRequest(event: Parameters<Handler>[0]) {
+  const headers = event.headers ?? {};
+  const origin = headers.origin;
+  if (!origin) return true;
+  try {
+    const expectedHost = headers["x-forwarded-host"] || headers.host;
+    return !expectedHost || new URL(origin).host === expectedHost;
+  } catch {
+    return false;
+  }
+}
+
 function json(statusCode: number, body: Record<string, unknown>) {
-  return { statusCode, headers: { "content-type": "application/json", "cache-control": "no-store" }, body: JSON.stringify(body) };
+  return { statusCode, headers: { "content-type": "application/json", "cache-control": "no-store", ...securityHeaders }, body: JSON.stringify(body) };
 }
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== "POST") return json(405, { error: "Method not allowed" });
+  if (!isTrustedSameOriginRequest(event)) return json(403, { error: "Cross-site quotation requests are not allowed." });
   if (!process.env.COMMERCIAL_DATABASE_URL) return json(503, { error: "Quotation requests are not configured yet." });
   let input: Record<string, unknown>;
   try { input = JSON.parse(event.body ?? "{}"); } catch { return json(400, { error: "Invalid request payload" }); }

@@ -7,6 +7,23 @@ describe("commercial quotation endpoint", () => {
     expect(result).toMatchObject({ statusCode: 405 });
   });
 
+  it("rejects cross-site quotation submissions before any database work", async () => {
+    const result = await handler({
+      httpMethod: "POST",
+      headers: { origin: "https://untrusted.example", host: "maintainr.example" },
+      body: "{}",
+    } as never, {} as never);
+
+    expect(result).toMatchObject({
+      statusCode: 403,
+      headers: expect.objectContaining({
+        "cache-control": "no-store",
+        "cross-origin-resource-policy": "same-site",
+        "x-content-type-options": "nosniff",
+      }),
+    });
+  });
+
   it("refuses submissions until a separate commercial database is configured", async () => {
     const original = process.env.COMMERCIAL_DATABASE_URL;
     delete process.env.COMMERCIAL_DATABASE_URL;

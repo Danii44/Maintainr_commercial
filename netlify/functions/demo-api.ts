@@ -15,15 +15,55 @@ const COOKIE_NAME = "maintainr_demo_session";
 const SESSION_MS = 1000 * 60 * 60 * 8;
 const passwordPattern = /^scrypt\$([a-f0-9]+)\$([a-f0-9]+)$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_LOGIN_ATTEMPTS = 8;
+const LOGIN_WINDOW_MS = 15 * 60 * 1000;
+const loginAttempts = new Map<string, { count: number; resetAt: number }>();
+
+function requestAddress(event: HandlerEvent) {
+  return event.headers["x-nf-client-connection-ip"] || event.headers["x-forwarded-for"]?.split(",")[0]?.trim() || "unknown";
+}
+
+function loginAttemptKey(event: HandlerEvent, email: string) { return `${requestAddress(event)}:${email}`; }
+
+function isLoginRateLimited(key: string) {
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (!record || record.resetAt <= now) return false;
+  return record.count >= MAX_LOGIN_ATTEMPTS;
+}
+
+function recordFailedLogin(key: string) {
+  const now = Date.now();
+  const record = loginAttempts.get(key);
+  if (!record || record.resetAt <= now) loginAttempts.set(key, { count: 1, resetAt: now + LOGIN_WINDOW_MS });
+  else record.count += 1;
+}
+
+function clearFailedLogins(key: string) { loginAttempts.delete(key); }
+
+function isTrustedSameOriginRequest(event: HandlerEvent) {
+  const headers = event.headers ?? {};
+  const origin = headers.origin;
+  if (!origin) return true;
+  try {
+    const expectedHost = headers["x-forwarded-host"] || headers.host;
+    return !expectedHost || new URL(origin).host === expectedHost;
+  } catch {
+    return false;
+  }
+}
 
 const securityHeaders = {
   "content-security-policy": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'",
   "cross-origin-opener-policy": "same-origin",
+  "cross-origin-resource-policy": "same-site",
+  "origin-agent-cluster": "?1",
   "referrer-policy": "strict-origin-when-cross-origin",
   "permissions-policy": "camera=(), geolocation=(), microphone=(), payment=(), usb=()",
   "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
   "x-content-type-options": "nosniff",
   "x-frame-options": "SAMEORIGIN",
+  "x-robots-tag": "noindex, nofollow",
 };
 
 function json(statusCode: number, body: Record<string, unknown>, headers: Record<string, string> = {}) {
@@ -137,13 +177,17 @@ export const handler: Handler = async (event) => {
   try {
     const input = event.httpMethod === "POST" ? await body(event) : { action: "session" };
     const action = typeof input.action === "string" ? input.action : "";
+    if (event.httpMethod === "POST" && !isTrustedSameOriginRequest(event)) return json(403, { error: "Cross-site demo requests are not allowed." });
     if (action === "login") {
       const email = typeof input.email === "string" ? input.email.trim().toLowerCase() : "";
       const password = typeof input.password === "string" ? input.password : "";
-      if (!emailPattern.test(email) || password.length < 8) return json(400, { error: "Enter a valid demo email and password." });
+      const attemptKey = loginAttemptKey(event, email || "invalid");
+      if (isLoginRateLimited(attemptKey)) return json(429, { error: "Too many demo sign-in attempts. Please wait and try again." });
+      if (!emailPattern.test(email) || password.length < 8) { recordFailedLogin(attemptKey); return json(400, { error: "Enter a valid demo email and password." }); }
       const result = await client.query<Account & { passwordHash: string }>("select id, email, display_name as \"displayName\", role, phone, avatar_url as \"avatarUrl\", unit_code as \"unitCode\", password_hash as \"passwordHash\" from demo_accounts where email = $1 and is_active = true limit 1", [email]);
       const account = result.rows[0];
-      if (!account || !verifyPassword(password, account.passwordHash)) return json(401, { error: "Demo email or password is not valid." });
+      if (!account || !verifyPassword(password, account.passwordHash)) { recordFailedLogin(attemptKey); return json(401, { error: "Demo email or password is not valid." }); }
+      clearFailedLogins(attemptKey);
       const token = randomBytes(32).toString("base64url");
       await client.query("delete from demo_sessions where expires_at <= now()");
       await client.query("insert into demo_sessions (token_hash, account_id, expires_at) values ($1,$2,now() + interval '8 hours')", [hashToken(token), account.id]);

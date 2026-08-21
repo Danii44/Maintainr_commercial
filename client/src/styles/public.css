@@ -164,3 +164,31 @@
   .maintainr-public-header,
   .maintainr-public-header::after { transition: none; }
 }
+
+/* Commercial demo priority panels use the same restrained glass depth as shared workspace cards. */
+.maintainr-demo-focus {
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 180ms var(--ease-out, ease), box-shadow 180ms var(--ease-out, ease), transform 180ms var(--ease-out, ease);
+}
+
+.maintainr-demo-focus::before {
+  background: linear-gradient(122deg, color-mix(in srgb, var(--maintainr-mint-100) 16%, transparent), transparent 36%, color-mix(in srgb, var(--maintainr-sage-400) 14%, transparent));
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.maintainr-demo-focus > * { position: relative; z-index: 1; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .maintainr-demo-focus:hover {
+    box-shadow: 0 1.45rem 3.4rem color-mix(in srgb, var(--maintainr-ink-950) 28%, transparent), inset 0 1px 0 color-mix(in srgb, var(--maintainr-mint-100) 18%, transparent);
+    transform: translateY(-.2rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) { .maintainr-demo-focus { transition: none; } }

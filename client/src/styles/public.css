@@ -86,3 +86,46 @@
 .maintainr-demo-action-text:disabled { color: var(--maintainr-muted) !important; cursor: not-allowed; }
 
 .maintainr-public-brand-logo { display: block; height: 1.8rem; object-fit: contain; width: 1.8rem; }
+
+/* Premium glass treatment for public navigation and the isolated product demo. */
+.maintainr-public-header {
+  background: color-mix(in srgb, var(--maintainr-panel) 78%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--maintainr-line) 78%, var(--maintainr-panel));
+  box-shadow: 0 .8rem 2.5rem color-mix(in srgb, var(--maintainr-ink-950) 8%, transparent);
+}
+
+.maintainr-public-brand-mark,
+.maintainr-public-menu-toggle,
+.maintainr-theme-toggle,
+.maintainr-public-mobile-nav {
+  background: color-mix(in srgb, var(--maintainr-panel) 80%, transparent);
+  border-color: color-mix(in srgb, var(--maintainr-line) 82%, var(--maintainr-panel));
+}
+
+.maintainr-demo-card,
+.maintainr-demo-field,
+.maintainr-demo-utility,
+.maintainr-demo-canvas-translucent {
+  background: color-mix(in srgb, var(--maintainr-panel) 80%, transparent) !important;
+  border-color: color-mix(in srgb, var(--maintainr-line) 82%, var(--maintainr-panel)) !important;
+  box-shadow: 0 1rem 2.7rem color-mix(in srgb, var(--maintainr-ink-950) 8%, transparent);
+}
+
+.maintainr-demo-focus {
+  box-shadow: 0 1.4rem 3.25rem color-mix(in srgb, var(--maintainr-ink-950) 28%, transparent), inset 0 1px 0 color-mix(in srgb, var(--maintainr-mint-100) 18%, transparent);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .maintainr-public-header,
+  .maintainr-public-brand-mark,
+  .maintainr-public-menu-toggle,
+  .maintainr-theme-toggle,
+  .maintainr-public-mobile-nav,
+  .maintainr-demo-card,
+  .maintainr-demo-field,
+  .maintainr-demo-utility,
+  .maintainr-demo-canvas-translucent {
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    backdrop-filter: blur(18px) saturate(130%);
+  }
+}

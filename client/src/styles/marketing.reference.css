@@ -39,3 +39,113 @@
 @media (prefers-reduced-motion: reduce) {
   .marketing-reference-ring-one, .marketing-reference-ring-two, .marketing-reference-float-card, .marketing-reference-drawn-line { animation: none !important; }
 }
+
+/* Animated PNG product composition */
+.marketing-png-hero-stage {
+  isolation: isolate;
+  max-width: 75rem;
+  min-height: clamp(25rem, 51vw, 42rem);
+  padding: clamp(.25rem, 2vw, 1.4rem) clamp(.25rem, 2vw, 1.5rem) 1.5rem;
+}
+.marketing-png-hero-stage::before {
+  background: radial-gradient(circle, color-mix(in srgb, var(--marketing-accent) 24%, transparent), transparent 67%);
+  content: "";
+  inset: 8% 15% 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+}
+.marketing-png-hero-orbit {
+  border-radius: 2.25rem;
+  display: block;
+  filter: drop-shadow(0 24px 40px color-mix(in srgb, var(--marketing-ink) 16%, transparent));
+  height: auto;
+  margin-inline: auto;
+  max-width: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+.marketing-png-live-dashboard {
+  background: var(--marketing-paper);
+  border: 1px solid color-mix(in srgb, var(--marketing-brand) 32%, transparent);
+  border-radius: 1rem;
+  box-shadow: 0 28px 58px color-mix(in srgb, var(--marketing-ink) 25%, transparent);
+  left: clamp(12%, 18vw, 22%);
+  overflow: hidden;
+  position: absolute;
+  top: clamp(18%, 12vw, 24%);
+  transform: perspective(1600px) rotateX(4deg) rotateY(-8deg);
+  transform-origin: center;
+  width: clamp(16rem, 42vw, 34.5rem);
+  z-index: 3;
+}
+.marketing-png-live-dashboard > img { display: block; height: auto; width: 100%; }
+.marketing-png-live-dashboard-bar {
+  align-items: center;
+  background: color-mix(in srgb, var(--marketing-paper) 93%, var(--marketing-accent));
+  border-bottom: 1px solid color-mix(in srgb, var(--marketing-brand) 20%, transparent);
+  color: var(--marketing-muted);
+  display: flex;
+  font-size: clamp(.54rem, .75vw, .68rem);
+  gap: .3rem;
+  min-height: 2.15rem;
+  padding: 0 .7rem;
+}
+.marketing-png-live-dashboard-bar > span { background: var(--marketing-accent); border-radius: 999px; height: .34rem; width: .34rem; }
+.marketing-png-live-dashboard-bar > span:nth-child(2) { background: var(--marketing-brand); }
+.marketing-png-live-dashboard-bar > span:nth-child(3) { background: var(--marketing-sage); }
+.marketing-png-live-dashboard-bar > p { color: var(--marketing-ink); font-weight: 700; margin: 0 auto 0 .24rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.marketing-png-live-dashboard-bar > div { align-items: center; display: flex; font-weight: 700; gap: .28rem; }
+.marketing-png-live-dashboard-bar i { background: var(--marketing-brand); border-radius: 999px; display: block; height: .38rem; width: .38rem; }
+.marketing-png-live-dashboard-status {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--marketing-paper) 89%, transparent);
+  border: 1px solid color-mix(in srgb, var(--marketing-brand) 36%, transparent);
+  border-radius: 999px;
+  bottom: .75rem;
+  color: var(--marketing-ink);
+  display: flex;
+  font-size: clamp(.57rem, .78vw, .7rem);
+  font-weight: 750;
+  gap: .38rem;
+  left: .75rem;
+  padding: .42rem .62rem;
+  position: absolute;
+}
+.marketing-png-live-dashboard-status svg { color: var(--marketing-brand); }
+.marketing-png-hero-workflow {
+  bottom: -2%;
+  filter: drop-shadow(0 18px 26px color-mix(in srgb, var(--marketing-ink) 16%, transparent));
+  height: auto;
+  position: absolute;
+  right: -1%;
+  width: clamp(8.25rem, 17vw, 15rem);
+  z-index: 4;
+}
+.marketing-png-hero-stage .marketing-reference-float-card { left: 6%; top: 14%; z-index: 5; }
+.marketing-png-hero-stage .marketing-mobile-proof { bottom: 2%; right: 9%; z-index: 6; }
+.marketing-roles-image-wrap-png { overflow: visible; }
+.marketing-roles-image-png { animation: maintainr-png-gentle-float 7s ease-in-out infinite; border-radius: 2rem; box-shadow: 0 28px 55px color-mix(in srgb, var(--marketing-ink) 17%, transparent); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .marketing-png-hero-orbit { animation: maintainr-png-hero-hover 8s ease-in-out infinite; }
+  .marketing-png-live-dashboard { animation: maintainr-png-dashboard-float 6.5s ease-in-out infinite; }
+  .marketing-png-hero-workflow { animation: maintainr-png-gentle-float 5.4s ease-in-out infinite; }
+}
+@keyframes maintainr-png-hero-hover { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(.35deg); } }
+@keyframes maintainr-png-dashboard-float { 0%, 100% { transform: perspective(1600px) rotateX(4deg) rotateY(-8deg) translateY(0); } 50% { transform: perspective(1600px) rotateX(3deg) rotateY(-6.5deg) translateY(-13px); } }
+@keyframes maintainr-png-gentle-float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-13px) rotate(1.25deg); } }
+@media (max-width: 760px) {
+  .marketing-png-hero-stage { min-height: 20rem; padding: 0 0 1rem; }
+  .marketing-png-hero-orbit { border-radius: 1.3rem; }
+  .marketing-png-live-dashboard { border-radius: .72rem; left: 7%; top: 20%; width: 69%; }
+  .marketing-png-live-dashboard-bar { min-height: 1.7rem; padding-inline: .48rem; }
+  .marketing-png-live-dashboard-status { bottom: .38rem; font-size: .49rem; left: .38rem; padding: .3rem .4rem; }
+  .marketing-png-hero-workflow { bottom: -8%; right: -5%; width: 34%; }
+  .marketing-png-hero-stage .marketing-reference-float-card { display: none; }
+  .marketing-png-hero-stage .marketing-mobile-proof { bottom: -8%; right: 5%; transform: scale(.78); transform-origin: bottom right; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marketing-png-hero-orbit, .marketing-png-live-dashboard, .marketing-png-hero-workflow, .marketing-roles-image-png { animation: none !important; }
+}

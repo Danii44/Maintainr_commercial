@@ -239,3 +239,31 @@
 .dark .maintainr-v3 :is([class*="text-[#0b756d]"], [class*="text-[#0f766e]"], [class*="text-[#083b38]"]) {
   color: var(--maintainr-action) !important;
 }
+
+/* Semantic standalone enquiry page primitives. */
+.maintainr-quote-page { background: var(--maintainr-canvas); color: var(--maintainr-ink); }
+.maintainr-quote-page .maintainr-quote-accent { color: var(--maintainr-action) !important; }
+.maintainr-quote-page .maintainr-quote-muted { color: var(--maintainr-muted) !important; }
+.maintainr-quote-page .maintainr-quote-divider { border-color: var(--maintainr-line) !important; }
+.maintainr-quote-form { background: var(--maintainr-panel) !important; border-color: var(--maintainr-action) !important; color: var(--maintainr-ink); }
+.maintainr-quote-control { background: transparent; border-color: var(--maintainr-field-border); color: var(--maintainr-ink); }
+.maintainr-quote-control::placeholder { color: var(--maintainr-placeholder); }
+.maintainr-quote-control:focus { border-color: var(--maintainr-focus); box-shadow: 0 2px 0 var(--maintainr-focus); outline: none; }
+.maintainr-quote-submit { background: var(--maintainr-action); color: var(--maintainr-action-foreground); }
+.maintainr-quote-submit:hover { background: var(--maintainr-action-hover); color: var(--maintainr-action-foreground); }
+
+/* Dashboard showcase dark-mode bridge for legacy editorial utility colors. */
+.dark .maintainr-dashboard-showcase {
+  background: radial-gradient(circle at 8% 8%, color-mix(in srgb, var(--maintainr-sage-400) 14%, transparent), transparent 28rem), var(--maintainr-canvas) !important;
+  color: var(--maintainr-ink);
+}
+
+.dark .maintainr-dashboard-showcase :is([class*="text-[#172033]"], [class*="text-[#315653]"]) { color: var(--maintainr-ink) !important; }
+.dark .maintainr-dashboard-showcase [class*="text-[#526176]"] { color: var(--maintainr-muted) !important; }
+.dark .maintainr-dashboard-showcase :is([class*="text-[#0f766e]"], [class*="text-teal-100"]) { color: var(--maintainr-action) !important; }
+.dark .maintainr-dashboard-showcase :is([class*="bg-white/"], [class*="bg-[#f4fffd]"], [class*="bg-[#eaf8f5]"]) { background-color: color-mix(in srgb, var(--maintainr-panel) 88%, transparent) !important; }
+.dark .maintainr-dashboard-showcase :is([class*="border-[#a9ded6]"], [class*="border-[#b9e7df]"], [class*="border-[#c7e8e2]"], [class*="border-[#9eddd2]"]) { border-color: var(--maintainr-line) !important; }
+.dark .maintainr-dashboard-showcase :is(.maintainr-3d-glass-panel, .maintainr-3d-mini-card) {
+  background: color-mix(in srgb, var(--maintainr-panel) 88%, transparent) !important;
+  box-shadow: 0 1.15rem 3rem color-mix(in srgb, var(--maintainr-ink-950) 42%, transparent) !important;
+}

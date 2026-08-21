@@ -11,7 +11,7 @@
   --marketing-brand-soft: var(--maintainr-evergreen-800);
   --marketing-accent: var(--maintainr-sage-400);
   --marketing-inverse: var(--maintainr-mint-100);
-  --marketing-inverse-muted: #c9dfcf;
+  --marketing-inverse-muted: var(--maintainr-on-dark-muted);
   --marketing-dark: var(--maintainr-ink-950);
 }
 
@@ -28,7 +28,7 @@
 .dark .marketing-workflow-section, .dark .marketing-roles-section, .dark .marketing-faq-section { background: var(--marketing-paper-soft); }
 .dark .marketing-outcome-bar, .dark .marketing-problem-section, .dark .marketing-adoption-section { background: var(--marketing-paper); }
 .dark .marketing-problem-card, .dark .marketing-workflow-card, .dark .marketing-role-card, .dark .marketing-adoption-grid article { background: var(--maintainr-evergreen-800); border-color: var(--marketing-line); }
-.dark .marketing-card-icon, .dark .marketing-workflow-card > span, .dark .marketing-role-card > span, .dark .marketing-proof-item > span { background: #1e4a3e; color: var(--marketing-brand); }
+.dark .marketing-card-icon, .dark .marketing-workflow-card > span, .dark .marketing-role-card > span, .dark .marketing-proof-item > span { background: var(--maintainr-evergreen-800); color: var(--marketing-brand); }
 .dark .marketing-visual-image, .dark .marketing-roles-image { border-color: var(--marketing-line); }
 .dark .marketing-platform-section { background: var(--maintainr-ink-950); }
 .dark .marketing-platform-screen-shell { background: var(--maintainr-white); }

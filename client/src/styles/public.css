@@ -84,3 +84,5 @@
 
 .maintainr-demo-utility:hover { color: var(--maintainr-action) !important; }
 .maintainr-demo-action-text:disabled { color: var(--maintainr-muted) !important; cursor: not-allowed; }
+
+.maintainr-public-brand-logo { display: block; height: 1.8rem; object-fit: contain; width: 1.8rem; }

@@ -3,13 +3,13 @@
   --maintainr-canvas: var(--maintainr-ink-950);
   --maintainr-panel: var(--maintainr-forest-900);
   --maintainr-panel-subtle: var(--maintainr-evergreen-800);
-  --maintainr-line: #315d50;
+  --maintainr-line: #467b6a;
   --maintainr-ink: var(--maintainr-mint-100);
-  --maintainr-muted: #b4d0bc;
-  --maintainr-soft: #1b4339;
-  --maintainr-field: #102d29;
-  --maintainr-field-border: #417263;
-  --maintainr-placeholder: #9fbda9;
+  --maintainr-muted: #c7dfce;
+  --maintainr-soft: #163832;
+  --maintainr-field: #0e302b;
+  --maintainr-field-border: #5b907a;
+  --maintainr-placeholder: #b4d0bc;
   --maintainr-focus: var(--maintainr-sage-400);
   --maintainr-on-dark: var(--maintainr-mint-100);
   --maintainr-on-dark-muted: #c7dfce;
@@ -28,7 +28,7 @@
   --secondary-foreground: var(--maintainr-ink);
   --muted: var(--maintainr-evergreen-800);
   --muted-foreground: var(--maintainr-muted);
-  --accent: #1e4a3e;
+  --accent: var(--maintainr-evergreen-800);
   --accent-foreground: var(--maintainr-ink);
   --destructive: #db827c;
   --destructive-foreground: var(--maintainr-ink-950);

@@ -3,12 +3,12 @@
   --marketing-paper: var(--maintainr-forest-900);
   --marketing-paper-soft: var(--maintainr-evergreen-800);
   --marketing-ink: var(--maintainr-mint-100);
-  --marketing-muted: #bfd8c5;
-  --marketing-subtle: #a8c7b1;
-  --marketing-line: #3a6b5c;
+  --marketing-muted: #c7dfce;
+  --marketing-subtle: #b4d0bc;
+  --marketing-line: #467b6a;
   --marketing-brand: var(--maintainr-sage-400);
   --marketing-brand-strong: var(--maintainr-mint-100);
-  --marketing-brand-soft: #1e4a3e;
+  --marketing-brand-soft: var(--maintainr-evergreen-800);
   --marketing-accent: var(--maintainr-sage-400);
   --marketing-inverse: var(--maintainr-mint-100);
   --marketing-inverse-muted: #c9dfcf;

@@ -25,11 +25,11 @@ You need Node.js 20 or later, pnpm, and a separate PostgreSQL database only if y
 Create a dedicated commercial PostgreSQL database. Do not reuse the SaaS database. Apply the quotation schema, then the isolated demo schema:
 
 ```bash
-psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f COMMERCIAL_SCHEMA.sql
-psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f COMMERCIAL_DEMO_SCHEMA.sql
+psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/schema/COMMERCIAL_SCHEMA.sql
+psql "$COMMERCIAL_DATABASE_URL" -v ON_ERROR_STOP=1 -f database/schema/COMMERCIAL_DEMO_SCHEMA.sql
 ```
 
-`COMMERCIAL_SCHEMA.sql` stores quotation requests only. `COMMERCIAL_DEMO_SCHEMA.sql` stores isolated sample demo accounts and workflow records only. Neither file contains or should receive SaaS customer data.
+`database/schema/COMMERCIAL_SCHEMA.sql` stores quotation requests only. `database/schema/COMMERCIAL_DEMO_SCHEMA.sql` stores isolated sample demo accounts and workflow records only. Neither file contains or should receive SaaS customer data.
 
 ## Configure environment values
 

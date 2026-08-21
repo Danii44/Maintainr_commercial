@@ -1,0 +1,25 @@
+html:not(.dark) .maintainr-marketing-home {
+  --marketing-bg: var(--maintainr-mint-100);
+  --marketing-paper: var(--maintainr-white);
+  --marketing-paper-soft: #edf8ef;
+  --marketing-ink: var(--maintainr-ink-950);
+  --marketing-muted: #496d5e;
+  --marketing-subtle: #668976;
+  --marketing-line: #b9d6c2;
+  --marketing-brand: var(--maintainr-evergreen-700);
+  --marketing-brand-strong: var(--maintainr-evergreen-800);
+  --marketing-brand-soft: #e1f2e5;
+  --marketing-accent: var(--maintainr-sage-400);
+  --marketing-inverse: var(--maintainr-mint-100);
+  --marketing-inverse-muted: #d5eadb;
+  --marketing-dark: var(--maintainr-forest-900);
+}
+
+html:not(.dark) .marketing-hero {
+  background: radial-gradient(circle at 7% 13%, rgba(142, 182, 155, .24), transparent 25%), radial-gradient(circle at 93% 12%, rgba(35, 83, 71, .16), transparent 27%), linear-gradient(180deg, var(--maintainr-white), var(--marketing-bg));
+}
+html:not(.dark) .marketing-dashboard-browser { border-color: color-mix(in srgb, var(--marketing-brand) 30%, transparent); }
+html:not(.dark) .marketing-dashboard-aura, html:not(.dark) .marketing-image-glow { background: radial-gradient(ellipse at center, rgba(142, 182, 155, .32), transparent 67%); }
+html:not(.dark) .marketing-primary-action { background: var(--marketing-brand); color: var(--maintainr-white) !important; }
+html:not(.dark) .marketing-primary-action:hover { background: var(--marketing-brand-strong); color: var(--maintainr-white) !important; }
+html:not(.dark) .marketing-final-cta { background: linear-gradient(128deg, var(--maintainr-evergreen-700), var(--maintainr-forest-900) 72%); }

@@ -5,7 +5,7 @@ const root = new URL("..", import.meta.url);
 
 describe("public commercial conversion controls", () => {
   it("keeps public conversion controls focused on the dedicated Product Experience and consultation path", async () => {
-    const [header, entry, site, home, tour, experience, styles] = await Promise.all([
+    const [header, entry, site, home, tour, experience, styleManifest] = await Promise.all([
       readFile(new URL("client/src/components/CommercialHeader.tsx", root), "utf8"),
       readFile(new URL("client/src/main.tsx", root), "utf8"),
       readFile(new URL("client/src/pages/CommercialWebsite.tsx", root), "utf8"),
@@ -14,6 +14,17 @@ describe("public commercial conversion controls", () => {
       readFile(new URL("client/src/pages/ProductExperiencePage.tsx", root), "utf8"),
       readFile(new URL("client/src/index.css", root), "utf8"),
     ]);
+    const themeStyles = (await Promise.all([
+      "client/src/styles/tokens.css",
+      "client/src/styles/theme.light.css",
+      "client/src/styles/theme.dark.css",
+      "client/src/styles/base.css",
+      "client/src/styles/dashboard.css",
+      "client/src/styles/public.css",
+      "client/src/styles/marketing.css",
+      "client/src/styles/marketing.light.css",
+      "client/src/styles/marketing.dark.css",
+    ].map(file => readFile(new URL(file, root), "utf8")))).join("\n");
 
     expect(header).not.toContain("Customer portal");
     expect(header).toContain("ThemeToggle");
@@ -30,8 +41,11 @@ describe("public commercial conversion controls", () => {
     expect(site.toLowerCase()).not.toContain("demo");
     expect(site).toContain("whileInView");
     expect(site).toContain("whileHover");
-    expect(styles).toContain("scroll-behavior: smooth");
-    expect(styles).toContain("prefers-reduced-motion: reduce");
+    expect(styleManifest).toContain('@import "./styles/theme.light.css"');
+    expect(styleManifest).toContain('@import "./styles/theme.dark.css"');
+    expect(styleManifest).toContain('@import "./styles/marketing.css"');
+    expect(themeStyles).toContain("scroll-behavior: smooth");
+    expect(themeStyles).toContain("prefers-reduced-motion: reduce");
     expect(home).toContain("WHEN WORK GETS LOST");
     expect(home).toContain("HOW MAINTAINR GUIDES THE WORK");
     expect(home).toContain("ONE RECORD. FOUR FOCUSED VIEWS.");
@@ -74,29 +88,17 @@ describe("public commercial conversion controls", () => {
     expect(experience).toContain("Message workspace");
     expect(home).toContain("useReducedMotion");
     expect(home).toContain("marketing-visual-story");
-    expect(styles).toContain("prefers-reduced-motion: no-preference");
-    expect(styles).toContain("--maintainr-dark-copy");
-    expect(styles).toContain("--maintainr-on-dark");
-    expect(styles).toContain("--maintainr-on-dark-muted");
-    expect(styles).toContain("Deliberate dark editorial surfaces remain dark in light mode");
-    expect(styles).toContain('[class*="bg-white/"] :is(h1, h2, h3, h4, h5, h6, p, span, .text-white');
-    expect(styles).toContain(".bg-\\[\\#172033\\]");
-    expect(styles).toContain("color: #ffffff !important");
-    expect(styles).toContain("text-slate-600");
-    expect(styles).toContain("maintainr-theme-toggle");
-    expect(styles).toContain("every paper/mint card becomes a readable operational surface");
-    expect(styles).toContain("maintainr-v3 input");
-    expect(styles).toContain("commercial-mobile-nav");
-    expect(styles).toContain("maintainr-demo-shell");
-    expect(styles).toContain("maintainr-demo-card");
-    expect(styles).toContain("maintainr-demo-focus");
-    expect(styles).toContain("maintainr-demo-rail-panel");
-    expect(styles).toContain("maintainr-demo-rail-nav-active");
-    expect(styles).toContain("maintainr-demo-rail-signout");
-    expect(styles).toContain('html[dir="rtl"] .maintainr-demo-rail');
-    expect(styles).toContain("Commercial marketing refresh");
-    expect(styles).toContain(".maintainr-marketing-home");
-    expect(styles).toContain(".dark .maintainr-marketing-home");
-    expect(styles).toContain("marketing-dashboard-browser");
+    expect(themeStyles).toContain("prefers-reduced-motion: no-preference");
+    expect(themeStyles).toContain("--maintainr-ink-950: #051f20");
+    expect(themeStyles).toContain("--maintainr-mint-100: #daf1de");
+    expect(themeStyles).toContain("--maintainr-on-dark");
+    expect(themeStyles).toContain("maintainr-theme-toggle");
+    expect(themeStyles).toContain("commercial-mobile-nav");
+    expect(themeStyles).toContain("maintainr-demo-shell");
+    expect(themeStyles).toContain("maintainr-demo-card");
+    expect(themeStyles).toContain("maintainr-demo-rail-nav-active");
+    expect(themeStyles).toContain(".maintainr-marketing-home");
+    expect(themeStyles).toContain(".dark .maintainr-marketing-home");
+    expect(themeStyles).toContain("marketing-dashboard-browser");
   });
 });

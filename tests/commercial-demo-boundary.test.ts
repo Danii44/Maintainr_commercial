@@ -6,7 +6,7 @@ const root = new URL("..", import.meta.url);
 describe("commercial demo isolation", () => {
   it("keeps dedicated demo tables and a cookie-protected demo API inside the commercial product", async () => {
     const [schema, api, page, routing, env] = await Promise.all([
-      readFile(new URL("COMMERCIAL_DEMO_SCHEMA.sql", root), "utf8"),
+      readFile(new URL("database/schema/COMMERCIAL_DEMO_SCHEMA.sql", root), "utf8"),
       readFile(new URL("netlify/functions/demo-api.ts", root), "utf8"),
       readFile(new URL("client/src/pages/ProductExperiencePage.tsx", root), "utf8"),
       readFile(new URL("client/src/lib/demoApi.ts", root), "utf8"),

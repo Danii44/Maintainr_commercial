@@ -21,7 +21,7 @@ const accounts = [
 const client = new Client({ connectionString, ssl: { rejectUnauthorized: false } });
 await client.connect();
 try {
-  const schema = await readFile(new URL("../COMMERCIAL_DEMO_SCHEMA.sql", import.meta.url), "utf8");
+  const schema = await readFile(new URL("../database/schema/COMMERCIAL_DEMO_SCHEMA.sql", import.meta.url), "utf8");
   await client.query(schema);
   for (const [email, displayName, role] of accounts) {
     await client.query(

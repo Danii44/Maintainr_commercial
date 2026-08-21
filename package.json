@@ -11,7 +11,7 @@
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "echo 'Apply COMMERCIAL_SCHEMA.sql and COMMERCIAL_DEMO_SCHEMA.sql only to the separate commercial/demo database.'",
+    "db:push": "echo 'Apply database/schema/COMMERCIAL_SCHEMA.sql and database/schema/COMMERCIAL_DEMO_SCHEMA.sql only to the separate commercial/demo database.'",
     "demo:setup": "node scripts/setup-commercial-demo.mjs",
     "demo:reset": "DEMO_RESET=true node scripts/setup-commercial-demo.mjs",
     "demo:verify": "node scripts/verify-commercial-demo-workflow.mjs"

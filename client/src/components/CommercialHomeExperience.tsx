@@ -4,12 +4,12 @@ import type { ReactNode } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const visual = {
-  dashboard: "/assets/images/maintainr-dashboard-manager.png",
-  mobileDashboard: "/assets/images/maintainr-dashboard-mobile.png",
+  dashboard: "/assets/images/maintainr-dashboard-manager.webp",
+  mobileDashboard: "/assets/images/maintainr-dashboard-mobile.webp",
   report: "/assets/images/maintainr-mobile-reporting-workflow.webp",
   evidence: "/assets/images/maintainr-field-evidence-workflow.webp",
-  heroOrbit: "/assets/images/maintainr-hero-product-orbit.png",
-  workflowFloat: "/assets/images/maintainr-workflow-float.png",
+  heroOrbit: "/assets/images/maintainr-hero-product-orbit.webp",
+  workflowFloat: "/assets/images/maintainr-workflow-float.webp",
 };
 
 type RevealDirection = "up" | "left" | "right";

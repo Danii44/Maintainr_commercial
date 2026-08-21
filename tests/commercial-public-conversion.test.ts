@@ -52,7 +52,7 @@ describe("public commercial conversion controls", () => {
     expect(home).toContain("A CALMER WAY TO START");
     expect(home).toContain("PRACTICAL QUESTIONS");
     expect(home).toContain("marketing-dashboard-stage");
-    expect(home).toContain("maintainr-dashboard-manager.png");
+    expect(home).toContain("maintainr-dashboard-manager.webp");
     expect(home).toContain("maintainr-field-evidence-workflow.webp");
     expect(tour).toContain("TAKE A PRODUCT TOUR");
     expect(tour).toContain('href="/experience"');

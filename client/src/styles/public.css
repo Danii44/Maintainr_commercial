@@ -192,3 +192,50 @@
 }
 
 @media (prefers-reduced-motion: reduce) { .maintainr-demo-focus { transition: none; } }
+
+/* Public site contrast safeguards for the light and dark palettes. */
+.maintainr-v3-primary-action {
+  background: var(--maintainr-action);
+  color: var(--maintainr-action-foreground) !important;
+}
+
+.maintainr-v3-primary-action:hover {
+  background: var(--maintainr-action-hover);
+  color: var(--maintainr-action-foreground) !important;
+}
+
+.maintainr-site-footer {
+  background: var(--maintainr-ink-950);
+  color: var(--maintainr-on-dark);
+}
+
+.maintainr-site-footer-mark {
+  background: var(--maintainr-mint-100);
+  color: var(--maintainr-evergreen-700);
+}
+
+.maintainr-site-footer-muted {
+  color: var(--maintainr-on-dark-muted) !important;
+}
+
+.maintainr-site-footer-links a {
+  color: var(--maintainr-on-dark-muted) !important;
+  text-decoration: none;
+  transition: color 160ms var(--ease-out, ease);
+}
+
+.maintainr-site-footer-links a:hover {
+  color: var(--maintainr-on-dark) !important;
+}
+
+.maintainr-site-footer :is([class*="text-[#a5eee2]"]) {
+  color: var(--maintainr-sage-400) !important;
+}
+
+.dark .maintainr-v3 :is([class*="bg-[#d7f7f1]"], [class*="bg-[#dffaf5]"], [class*="bg-[#d9f5f1]"], [class*="bg-white"]) {
+  background-color: var(--maintainr-panel) !important;
+}
+
+.dark .maintainr-v3 :is([class*="text-[#0b756d]"], [class*="text-[#0f766e]"], [class*="text-[#083b38]"]) {
+  color: var(--maintainr-action) !important;
+}

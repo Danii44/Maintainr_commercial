@@ -1,0 +1,41 @@
+/* Maintainr product-frame composition: an original implementation of centred copy,
+   a real product surface, restrained depth, and field-ready companion evidence. */
+.marketing-hero-layout-centered { display: block; padding-bottom: .5rem; }
+.marketing-hero-copy-centered { margin-inline: auto; max-width: 47rem; text-align: center; }
+.marketing-hero-copy-centered .marketing-hero-actions,
+.marketing-hero-copy-centered .marketing-hero-proof { justify-content: center; }
+.marketing-dashboard-stage-reference { margin: clamp(2.6rem, 5vw, 4.3rem) auto 0; max-width: 66rem; padding: .9rem 2.5rem 3.2rem; perspective: 1500px; }
+.marketing-dashboard-stage-reference .marketing-dashboard-browser { transform: perspective(1500px) rotateX(3deg) rotateY(-1.5deg); transform-style: preserve-3d; }
+.marketing-dashboard-stage-reference .marketing-dashboard-browser:hover { transform: perspective(1500px) rotateX(.8deg) rotateY(-.35deg) translateY(-9px); }
+.marketing-reference-ring { border: 1px solid color-mix(in srgb, var(--marketing-brand) 45%, transparent); border-radius: 999px; pointer-events: none; position: absolute; z-index: -1; }
+.marketing-reference-ring-one { height: clamp(17rem, 30vw, 31rem); left: -7%; opacity: .44; top: 5%; width: clamp(17rem, 30vw, 31rem); }
+.marketing-reference-ring-two { border-color: color-mix(in srgb, var(--marketing-accent) 45%, transparent); bottom: 4%; height: clamp(10rem, 20vw, 20rem); right: -5%; width: clamp(10rem, 20vw, 20rem); }
+.marketing-reference-drawn-line { border-left: 2px solid var(--marketing-brand); border-radius: 999px; height: 8.5rem; opacity: .6; position: absolute; right: 4%; top: 9%; transform: rotate(18deg); transform-origin: bottom; z-index: 2; }
+.marketing-reference-drawn-line::after { background: var(--marketing-brand); border-radius: 999px; content: ""; height: .65rem; left: -.4rem; position: absolute; top: -.1rem; width: .65rem; }
+.marketing-reference-float-card { align-items: center; backdrop-filter: blur(12px); background: color-mix(in srgb, var(--marketing-paper) 92%, transparent); border: 1px solid color-mix(in srgb, var(--marketing-brand) 38%, transparent); border-radius: .95rem; box-shadow: 0 20px 38px rgba(5, 31, 32, .16); color: var(--marketing-ink); display: flex; gap: .65rem; left: -2rem; padding: .7rem .82rem; position: absolute; top: 17%; transform: translateZ(54px) rotateY(6deg); z-index: 3; }
+.marketing-reference-float-card > svg { color: var(--marketing-brand); flex: 0 0 auto; }
+.marketing-reference-float-card span { display: grid; gap: .16rem; text-align: start; }
+.marketing-reference-float-card b { font-size: .7rem; line-height: 1.2; }
+.marketing-reference-float-card small { color: var(--marketing-muted); font-size: .62rem; line-height: 1.25; }
+.marketing-dashboard-stage-reference .marketing-mobile-proof { transform: translateZ(80px) rotateY(8deg); }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .marketing-reference-ring-one { animation: maintainr-reference-orbit 13s linear infinite; }
+  .marketing-reference-ring-two { animation: maintainr-reference-orbit 18s linear reverse infinite; }
+  .marketing-reference-float-card { animation: maintainr-reference-float 5.6s ease-in-out infinite; }
+  .marketing-reference-drawn-line { animation: maintainr-reference-line 1.2s cubic-bezier(.23, 1, .32, 1) both .62s; }
+}
+@keyframes maintainr-reference-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes maintainr-reference-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -11px; } }
+@keyframes maintainr-reference-line { from { clip-path: inset(100% 0 0); opacity: 0; } to { clip-path: inset(0 0 0); opacity: .6; } }
+
+@media (max-width: 760px) {
+  .marketing-dashboard-stage-reference { margin-top: 2.3rem; padding: .25rem .25rem 2.9rem; }
+  .marketing-reference-ring-one { left: -17%; top: 12%; }
+  .marketing-reference-ring-two { bottom: 10%; right: -17%; }
+  .marketing-reference-drawn-line, .marketing-reference-float-card { display: none; }
+  .marketing-dashboard-stage-reference .marketing-mobile-proof { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marketing-reference-ring-one, .marketing-reference-ring-two, .marketing-reference-float-card, .marketing-reference-drawn-line { animation: none !important; }
+}

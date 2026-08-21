@@ -34,12 +34,16 @@ function Secondary({ href, children }: { href: string; children: ReactNode }) {
 
 function DashboardFrame({ t }: { t: (english: string, arabic: string) => string }) {
   const reduce = useReducedMotion();
-  return <motion.div initial={{ opacity: 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .72, delay: .12, ease: [0.23, 1, .32, 1] }} className="marketing-dashboard-stage">
+  return <motion.div initial={{ opacity: 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .72, delay: .12, ease: [0.23, 1, .32, 1] }} className="marketing-dashboard-stage marketing-dashboard-stage-reference">
     <div className="marketing-dashboard-aura" aria-hidden="true" />
+    <span className="marketing-reference-ring marketing-reference-ring-one" aria-hidden="true" />
+    <span className="marketing-reference-ring marketing-reference-ring-two" aria-hidden="true" />
+    <span className="marketing-reference-drawn-line" aria-hidden="true" />
     <div className="marketing-dashboard-browser">
       <div className="marketing-browser-bar"><span /><span /><span /><p>{t("Maintainr · Property Manager workspace", "Maintainr · مساحة عمل مدير العقار")}</p><div className="marketing-browser-ready"><i />{t("Workspace ready", "مساحة العمل جاهزة")}</div></div>
       <img src={visual.dashboard} alt={t("Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} className="marketing-dashboard-image" />
       <div className="marketing-status-chip"><CheckCircle2 size={15} />{t("Every update stays with the request", "يبقى كل تحديث مع الطلب")}</div>
+      <div className="marketing-reference-float-card"><BellRing size={16} /><span><b>{t("Next step visible", "الخطوة التالية مرئية")}</b><small>{t("One connected maintenance record", "سجل صيانة متصل واحد")}</small></span></div>
     </div>
     <div className="marketing-mobile-proof"><img src={visual.mobileDashboard} alt={t("Maintainr mobile workspace", "مساحة عمل Maintainr على الهاتف")} /><span><Smartphone size={14} />{t("Field-ready", "جاهز للميدان")}</span></div>
   </motion.div>;
@@ -88,8 +92,8 @@ export function CommercialHomeExperience() {
     <section className="marketing-hero">
       <div className="marketing-hero-grid" aria-hidden="true" />
       <div className="marketing-hero-orb marketing-hero-orb-one" aria-hidden="true" /><div className="marketing-hero-orb marketing-hero-orb-two" aria-hidden="true" />
-      <div className="marketing-container marketing-hero-layout">
-        <Reveal className="marketing-hero-copy"><Eyebrow>{t("PROPERTY MAINTENANCE, MADE OPERABLE", "صيانة العقارات، أصبحت قابلة للتشغيل")}</Eyebrow><h1>{t("From the first report to the final proof, maintenance moves with", "من أول بلاغ إلى آخر إثبات، تتحرك الصيانة بوضوح")}</h1><em>{t("clarity.", "وثقة.")}</em><p>{t("Maintainr gives every property team one connected workflow for reporting, assigning, progressing, verifying, and reviewing the work that keeps buildings moving.", "يوفر Maintainr لكل فريق عقارات مسار عمل متصلاً واحداً للإبلاغ والتعيين والتقدم والتحقق ومراجعة العمل الذي يحافظ على حركة المباني.")}</p><div className="marketing-hero-actions"><Primary href="/quote"><Quote size={17} />{t("Plan your workflow", "خطط لمسار عملك")}</Primary><Secondary href="#how-it-works">{t("See the workflow", "شاهد مسار العمل")}<ArrowRight size={17} /></Secondary></div><div className="marketing-hero-proof"><span><CheckCircle2 size={15} />{t("One connected record", "سجل متصل واحد")}</span><span><BellRing size={15} />{t("Visible next steps", "خطوات تالية مرئية")}</span><span><Languages size={15} />{t("English + العربية", "العربية + English")}</span></div></Reveal>
+      <div className="marketing-container marketing-hero-layout marketing-hero-layout-centered">
+        <Reveal className="marketing-hero-copy marketing-hero-copy-centered"><Eyebrow>{t("PROPERTY MAINTENANCE, MADE OPERABLE", "صيانة العقارات، أصبحت قابلة للتشغيل")}</Eyebrow><h1>{t("From the first report to the final proof, maintenance moves with", "من أول بلاغ إلى آخر إثبات، تتحرك الصيانة بوضوح")}</h1><em>{t("clarity.", "وثقة.")}</em><p>{t("Maintainr gives every property team one connected workflow for reporting, assigning, progressing, verifying, and reviewing the work that keeps buildings moving.", "يوفر Maintainr لكل فريق عقارات مسار عمل متصلاً واحداً للإبلاغ والتعيين والتقدم والتحقق ومراجعة العمل الذي يحافظ على حركة المباني.")}</p><div className="marketing-hero-actions"><Primary href="/quote"><Quote size={17} />{t("Plan your workflow", "خطط لمسار عملك")}</Primary><Secondary href="#how-it-works">{t("See the workflow", "شاهد مسار العمل")}<ArrowRight size={17} /></Secondary></div><div className="marketing-hero-proof"><span><CheckCircle2 size={15} />{t("One connected record", "سجل متصل واحد")}</span><span><BellRing size={15} />{t("Visible next steps", "خطوات تالية مرئية")}</span><span><Languages size={15} />{t("English + العربية", "العربية + English")}</span></div></Reveal>
         <DashboardFrame t={t} />
       </div>
     </section>

@@ -54,3 +54,33 @@
 .maintainr-public-mobile-nav { background: var(--maintainr-panel); border-top: 1px solid var(--maintainr-line); padding: .75rem 1.25rem 1.5rem; }
 .maintainr-public-mobile-link { border-radius: .75rem; color: var(--maintainr-ink) !important; font-size: .9rem; padding: .75rem; }
 .maintainr-public-mobile-link:hover { background: var(--maintainr-soft); color: var(--maintainr-action) !important; }
+
+/* Semantic Commercial demo workspace primitives. */
+.maintainr-demo-canvas { background: var(--maintainr-canvas) !important; color: var(--maintainr-ink); }
+.maintainr-demo-canvas-translucent { background: color-mix(in srgb, var(--maintainr-canvas) 90%, transparent) !important; color: var(--maintainr-ink); }
+.maintainr-demo-rail-surface { background: linear-gradient(180deg, var(--maintainr-forest-900), var(--maintainr-ink-950)) !important; color: var(--maintainr-on-dark); }
+.maintainr-demo-muted { color: var(--maintainr-muted) !important; }
+.maintainr-demo-ink { color: var(--maintainr-ink) !important; }
+.maintainr-demo-line { border-color: var(--maintainr-line) !important; }
+.maintainr-demo-divide > :not([hidden]) ~ :not([hidden]) { border-color: var(--maintainr-line) !important; }
+.maintainr-demo-action { background: var(--maintainr-action) !important; color: var(--maintainr-action-foreground) !important; }
+.maintainr-demo-action:hover { background: var(--maintainr-action-hover) !important; color: var(--maintainr-action-foreground) !important; }
+.maintainr-demo-action:disabled { background: var(--maintainr-soft) !important; color: var(--maintainr-muted) !important; cursor: not-allowed; }
+.maintainr-demo-action-text { color: var(--maintainr-action) !important; }
+.maintainr-demo-disabled { background: var(--maintainr-soft) !important; color: var(--maintainr-muted) !important; }
+.maintainr-demo-focus { background: linear-gradient(145deg, var(--maintainr-evergreen-700), var(--maintainr-forest-900)); color: var(--maintainr-on-dark); box-shadow: 0 1.125rem 2.625rem color-mix(in srgb, var(--maintainr-ink-950) 20%, transparent); }
+.maintainr-demo-focus :is(p, h1, h2, h3, button) { color: inherit; }
+.maintainr-demo-focus .maintainr-demo-action-text { color: var(--maintainr-mint-100) !important; }
+
+.maintainr-demo-status { border-color: var(--maintainr-line) !important; }
+.maintainr-demo-status-danger { background: color-mix(in srgb, var(--destructive) 12%, var(--maintainr-panel)) !important; border-color: color-mix(in srgb, var(--destructive) 38%, transparent) !important; color: var(--destructive) !important; }
+.maintainr-demo-status-info { background: color-mix(in srgb, var(--maintainr-sage-400) 14%, var(--maintainr-panel)) !important; border-color: color-mix(in srgb, var(--maintainr-sage-400) 38%, transparent) !important; color: var(--maintainr-action) !important; }
+.maintainr-demo-status-warning { background: color-mix(in srgb, var(--chart-3) 12%, var(--maintainr-panel)) !important; border-color: color-mix(in srgb, var(--chart-3) 38%, transparent) !important; color: var(--chart-3) !important; }
+.maintainr-demo-status-success { background: color-mix(in srgb, var(--maintainr-sage-400) 14%, var(--maintainr-panel)) !important; border-color: color-mix(in srgb, var(--maintainr-sage-400) 38%, transparent) !important; color: var(--maintainr-success) !important; }
+
+.maintainr-demo-resolution-progress { appearance: none; -webkit-appearance: none; background: color-mix(in srgb, var(--maintainr-mint-100) 24%, transparent); border: 0; border-radius: 999px; display: block; height: .5rem; margin-block-start: 1.75rem; overflow: hidden; width: 100%; }
+.maintainr-demo-resolution-progress::-webkit-progress-bar { background: color-mix(in srgb, var(--maintainr-mint-100) 24%, transparent); border-radius: inherit; }
+.maintainr-demo-resolution-progress::-webkit-progress-value, .maintainr-demo-resolution-progress::-moz-progress-bar { background: var(--maintainr-mint-100); border-radius: inherit; }
+
+.maintainr-demo-utility:hover { color: var(--maintainr-action) !important; }
+.maintainr-demo-action-text:disabled { color: var(--maintainr-muted) !important; cursor: not-allowed; }

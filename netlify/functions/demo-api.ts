@@ -16,8 +16,18 @@ const SESSION_MS = 1000 * 60 * 60 * 8;
 const passwordPattern = /^scrypt\$([a-f0-9]+)\$([a-f0-9]+)$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const securityHeaders = {
+  "content-security-policy": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'",
+  "cross-origin-opener-policy": "same-origin",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), geolocation=(), microphone=(), payment=(), usb=()",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "SAMEORIGIN",
+};
+
 function json(statusCode: number, body: Record<string, unknown>, headers: Record<string, string> = {}) {
-  return { statusCode, headers: { "content-type": "application/json", "cache-control": "no-store", ...headers }, body: JSON.stringify(body) };
+  return { statusCode, headers: { "content-type": "application/json", "cache-control": "no-store", ...securityHeaders, ...headers }, body: JSON.stringify(body) };
 }
 
 function cookie(token: string, event: HandlerEvent) {
@@ -121,7 +131,7 @@ function canWork(role: DemoRole) { return role === "TECHNICIAN"; }
 async function body(event: HandlerEvent) { try { return JSON.parse(event.body ?? "{}") as Record<string, unknown>; } catch { return {}; } }
 
 export const handler: Handler = async (event) => {
-  if (event.httpMethod === "OPTIONS") return { statusCode: 204, headers: { "access-control-allow-methods": "GET, POST, OPTIONS", "access-control-allow-headers": "content-type", "access-control-allow-credentials": "true" }, body: "" };
+  if (event.httpMethod === "OPTIONS") return { statusCode: 204, headers: { "access-control-allow-methods": "GET, POST, OPTIONS", "access-control-allow-headers": "content-type", "access-control-allow-credentials": "true", ...securityHeaders }, body: "" };
   const pool = getPool();
   const client = await pool.connect();
   try {

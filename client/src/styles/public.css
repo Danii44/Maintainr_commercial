@@ -129,3 +129,38 @@
     backdrop-filter: blur(18px) saturate(130%);
   }
 }
+
+/* Sticky public header: a compact glass transition is triggered after the first scroll movement. */
+.maintainr-public-header {
+  isolation: isolate;
+  transition: background-color 220ms var(--ease-out, ease), border-color 220ms var(--ease-out, ease), box-shadow 220ms var(--ease-out, ease), -webkit-backdrop-filter 220ms var(--ease-out, ease), backdrop-filter 220ms var(--ease-out, ease);
+}
+
+.maintainr-public-header::after {
+  background: linear-gradient(90deg, var(--maintainr-sage-400), var(--maintainr-mint-100), var(--maintainr-evergreen-700));
+  bottom: -1px;
+  content: "";
+  height: 1px;
+  inset-inline: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scaleX(.18);
+  transform-origin: center;
+  transition: opacity 220ms var(--ease-out, ease), transform 300ms var(--ease-out, ease);
+  z-index: 1;
+}
+
+.maintainr-public-header-scrolled {
+  background: color-mix(in srgb, var(--maintainr-panel) 70%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--maintainr-sage-400) 38%, var(--maintainr-line));
+  box-shadow: 0 .9rem 2.8rem color-mix(in srgb, var(--maintainr-ink-950) 13%, transparent), inset 0 1px 0 color-mix(in srgb, var(--maintainr-on-dark) 8%, transparent);
+}
+
+.maintainr-public-header-scrolled::after { opacity: .9; transform: scaleX(1); }
+.maintainr-public-header-scrolled .maintainr-public-brand-mark { box-shadow: 0 .45rem 1.2rem color-mix(in srgb, var(--maintainr-evergreen-700) 16%, transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .maintainr-public-header,
+  .maintainr-public-header::after { transition: none; }
+}

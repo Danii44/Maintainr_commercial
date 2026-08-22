@@ -149,3 +149,9 @@
 @media (prefers-reduced-motion: reduce) {
   .marketing-png-hero-orbit, .marketing-png-live-dashboard, .marketing-png-hero-workflow, .marketing-roles-image-png { animation: none !important; }
 }
+
+.marketing-png-live-dashboard > video { display: block; height: auto; width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .marketing-png-live-dashboard > video { display: none; }
+  .marketing-png-live-dashboard > video + .marketing-png-live-dashboard-status { position: relative; }
+}

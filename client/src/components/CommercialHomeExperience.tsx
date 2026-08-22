@@ -5,6 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 const visual = {
   dashboard: "/assets/images/maintainr-dashboard-manager.webp",
+  dashboardVideo: "/assets/videos/maintainr-dashboard-hero.mp4",
   mobileDashboard: "/assets/images/maintainr-dashboard-mobile.webp",
   report: "/assets/images/maintainr-mobile-reporting-workflow.webp",
   evidence: "/assets/images/maintainr-field-evidence-workflow.webp",
@@ -41,7 +42,7 @@ function DashboardFrame({ t }: { t: (english: string, arabic: string) => string 
     <img src={visual.workflowFloat} alt="" aria-hidden="true" className="marketing-png-hero-workflow" />
     <div className="marketing-png-live-dashboard">
       <div className="marketing-png-live-dashboard-bar"><span /><span /><span /><p>{t("Live Maintainr workspace", "مساحة عمل Maintainr الحية")}</p><div><i />{t("Ready", "جاهزة")}</div></div>
-      <img src={visual.dashboard} alt={t("Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} />
+      {reduce ? <img src={visual.dashboard} alt={t("Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} /> : <video src={visual.dashboardVideo} poster={visual.dashboard} autoPlay muted loop playsInline preload="metadata" aria-label={t("Animated Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار المتحركة في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} />}
       <div className="marketing-png-live-dashboard-status"><CheckCircle2 size={15} />{t("Every update stays with the request", "يبقى كل تحديث مع الطلب")}</div>
     </div>
     <div className="marketing-reference-float-card"><BellRing size={16} /><span><b>{t("Next step visible", "الخطوة التالية مرئية")}</b><small>{t("One connected maintenance record", "سجل صيانة متصل واحد")}</small></span></div>

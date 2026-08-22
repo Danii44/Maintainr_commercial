@@ -23,3 +23,25 @@ html:not(.dark) .marketing-dashboard-aura, html:not(.dark) .marketing-image-glow
 html:not(.dark) .marketing-primary-action { background: var(--marketing-brand); color: var(--maintainr-white) !important; }
 html:not(.dark) .marketing-primary-action:hover { background: var(--marketing-brand-strong); color: var(--maintainr-white) !important; }
 html:not(.dark) .marketing-final-cta { background: linear-gradient(128deg, var(--maintainr-evergreen-700), var(--maintainr-forest-900) 72%); }
+
+/* The proof band is intentionally dark in light mode; keep its surface and foreground pairing explicit. */
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark {
+  background: radial-gradient(circle at 20% 0%, rgba(142, 182, 155, .16), transparent 30rem), linear-gradient(135deg, var(--maintainr-forest-900), var(--maintainr-ink-950));
+  color: var(--maintainr-mint-100);
+}
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark :is(h2, p, strong) { color: var(--maintainr-mint-100) !important; }
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-section-intro > p,
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial footer span { color: #c7dfce !important; }
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial {
+  background: rgba(218, 241, 222, .08);
+  border-color: rgba(218, 241, 222, .22);
+}
+
+/* Keep proof cards opaque so mint copy never blends with the light page beneath them. */
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial {
+  background: var(--maintainr-evergreen-800);
+  border-color: var(--maintainr-evergreen-700);
+}
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial > p,
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial strong { color: var(--maintainr-mint-100) !important; }
+html:not(.dark) .maintainr-marketing-home .marketing-proof-dark .marketing-testimonial footer span { color: #c7dfce !important; }

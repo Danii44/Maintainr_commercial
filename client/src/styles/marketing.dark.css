@@ -13,6 +13,7 @@
   --marketing-inverse: var(--maintainr-mint-100);
   --marketing-inverse-muted: var(--maintainr-on-dark-muted);
   --marketing-dark: var(--maintainr-ink-950);
+  --marketing-paper-dark: var(--maintainr-forest-900);
 }
 
 .dark .marketing-hero {
@@ -35,3 +36,9 @@
 .dark .marketing-final-cta { background: linear-gradient(128deg, var(--maintainr-evergreen-700), var(--maintainr-ink-950) 72%); }
 .dark .marketing-final-cta .marketing-primary-action { background: var(--maintainr-mint-100); color: var(--maintainr-ink-950) !important; }
 .dark .marketing-final-cta .marketing-primary-action:hover { background: var(--maintainr-white); color: var(--maintainr-ink-950) !important; }
+
+/* Keep readable foregrounds on every light-surface section while dark mode is active. */
+.dark .maintainr-marketing-home :is(.marketing-problem-section, .marketing-workflow-section, .marketing-roles-section, .marketing-adoption-section, .marketing-pricing-section, .marketing-faq-section) h2,
+.dark .maintainr-marketing-home :is(.marketing-problem-section, .marketing-workflow-section, .marketing-roles-section, .marketing-adoption-section, .marketing-pricing-section, .marketing-faq-section) h3 { color: var(--marketing-ink) !important; }
+.dark .maintainr-marketing-home :is(.marketing-problem-section, .marketing-workflow-section, .marketing-roles-section, .marketing-adoption-section, .marketing-pricing-section, .marketing-faq-section) :is(p, li, .marketing-price-detail) { color: var(--marketing-muted) !important; }
+.dark .maintainr-marketing-home :is(.marketing-problem-card, .marketing-workflow-card, .marketing-role-card, .marketing-adoption-grid article, .marketing-price-card) { background: color-mix(in srgb, var(--marketing-paper) 92%, transparent); border-color: var(--marketing-line); }

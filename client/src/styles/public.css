@@ -280,3 +280,21 @@
 .maintainr-site-footer-newsletter button:hover { background: var(--maintainr-mint-100); transform: translateY(-1px); }
 .maintainr-site-footer-newsletter small { color: color-mix(in srgb, var(--maintainr-on-dark) 58%, transparent); display: block; font-size: .68rem; line-height: 1.45; margin-top: .65rem; }
 @media (max-width: 760px) { .maintainr-site-footer-newsletter form { max-width: 24rem; } }
+
+/* Rendered dark-mode contrast corrections for remaining public surfaces. */
+.dark .maintainr-public-nav-link,
+.dark .maintainr-language-toggle,
+.dark .maintainr-theme-toggle { color: var(--maintainr-on-dark-muted) !important; }
+.dark .maintainr-public-nav-link:hover,
+.dark .maintainr-public-nav-link-active,
+.dark .maintainr-language-toggle:hover,
+.dark .maintainr-theme-toggle:hover { color: var(--maintainr-mint-100) !important; }
+.dark .marketing-price-badge { background: var(--maintainr-sage-400); color: var(--maintainr-ink-950) !important; }
+.dark .maintainr-dashboard-showcase [class*="text-teal-100"] { color: var(--maintainr-mint-100) !important; }
+.dark .commercial-tour { background: var(--maintainr-forest-900) !important; color: var(--maintainr-ink); }
+.dark .commercial-tour :is(h2, h3) { color: var(--maintainr-mint-100) !important; }
+.dark .commercial-tour :is(p, [class*="text-[#526176]"]) { color: var(--maintainr-on-dark-muted) !important; }
+.dark .commercial-tour > div > div:last-child article { background: var(--maintainr-evergreen-800) !important; border-color: var(--maintainr-line) !important; box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--maintainr-ink-950) 22%, transparent); }
+.dark .commercial-tour article svg { color: var(--maintainr-sage-400) !important; }
+.dark .commercial-tour > div > div:first-of-type a { background: var(--maintainr-sage-400) !important; color: var(--maintainr-ink-950) !important; }
+.dark .commercial-tour > div > div:first-of-type a:hover { background: var(--maintainr-mint-100) !important; }

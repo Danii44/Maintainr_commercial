@@ -184,3 +184,38 @@
 @media (prefers-reduced-motion: reduce) {
   .marketing-png-hero-stage .marketing-png-live-dashboard { animation: none !important; }
 }
+
+/* Final dark header contrast guard: this file is loaded last in the public stylesheet chain. */
+html.dark .maintainr-public-header .maintainr-public-nav-link,
+html.dark .maintainr-public-header .maintainr-language-toggle,
+html.dark .maintainr-public-header .maintainr-theme-toggle,
+html.dark .maintainr-public-header .maintainr-theme-toggle span { color: var(--maintainr-mint-100) !important; }
+html.dark .maintainr-public-header .maintainr-public-nav-link:hover,
+html.dark .maintainr-public-header .maintainr-public-nav-link-active,
+html.dark .maintainr-public-header .maintainr-language-toggle:hover,
+html.dark .maintainr-public-header .maintainr-theme-toggle:hover { color: var(--maintainr-white) !important; }
+
+/* Literal approved-palette fallback for the hydrated dark header. */
+html.dark .maintainr-public-header .maintainr-public-nav-link,
+html.dark .maintainr-public-header .maintainr-language-toggle,
+html.dark .maintainr-public-header .maintainr-theme-toggle,
+html.dark .maintainr-public-header .maintainr-theme-toggle span { color: #daf1de !important; }
+html.dark .maintainr-public-header .maintainr-public-nav-link:hover,
+html.dark .maintainr-public-header .maintainr-public-nav-link-active,
+html.dark .maintainr-public-header .maintainr-language-toggle:hover,
+html.dark .maintainr-public-header .maintainr-theme-toggle:hover { color: #ffffff !important; }
+
+html.dark .maintainr-public-header .maintainr-public-nav-link,
+html.dark .maintainr-public-header .maintainr-language-toggle,
+html.dark .maintainr-public-header .maintainr-theme-toggle { color: #daf1de !important; transition: none !important; }
+html.dark .maintainr-public-header .maintainr-theme-toggle span { color: #daf1de !important; }
+
+/* Isolated header hooks for deterministic dark contrast. */
+html.dark .maintainr-public-header .maintainr-public-nav-link-dark-safe,
+html.dark .maintainr-public-header .maintainr-language-toggle-dark-safe,
+html.dark .maintainr-public-header .maintainr-theme-toggle-dark-safe,
+html.dark .maintainr-public-header .maintainr-theme-toggle-dark-safe span { color: rgb(218 241 222) !important; transition: none !important; }
+html.dark .maintainr-public-header .maintainr-public-nav-link-dark-safe:hover,
+html.dark .maintainr-public-header .maintainr-public-nav-link-active,
+html.dark .maintainr-public-header .maintainr-language-toggle-dark-safe:hover,
+html.dark .maintainr-public-header .maintainr-theme-toggle-dark-safe:hover { color: rgb(255 255 255) !important; }

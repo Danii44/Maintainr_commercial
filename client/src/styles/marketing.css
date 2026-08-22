@@ -137,7 +137,10 @@
 .marketing-metric-value { color: var(--marketing-brand); font-size: clamp(2.6rem, 5vw, 4.5rem); font-weight: 650; letter-spacing: -.08em; line-height: .85; }
 .marketing-metric .marketing-eyebrow { margin: 0; }
 .marketing-metric > div > p { color: var(--marketing-muted); font-size: .85rem; line-height: 1.4; margin: .35rem 0 0; }
+.marketing-tilt-shell { transform-style: preserve-3d; transition: transform .22s ease-out; will-change: transform; }
 .marketing-problem-card, .marketing-workflow-card, .marketing-role-card, .marketing-adoption-grid article, .marketing-price-card { box-shadow: 0 .9rem 2.2rem color-mix(in srgb, var(--marketing-ink) 8%, transparent); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+.marketing-tilt-shell:focus-within { outline: 2px solid var(--marketing-brand); outline-offset: 5px; }
+@media (prefers-reduced-motion: reduce) { .marketing-tilt-shell { transform: none !important; transition: none !important; } }
 .marketing-problem-card:hover, .marketing-workflow-card:hover, .marketing-role-card:hover, .marketing-adoption-grid article:hover, .marketing-price-card:hover { box-shadow: 0 1.35rem 3.2rem color-mix(in srgb, var(--marketing-ink) 16%, transparent); transform: translateY(-7px); }
 .marketing-visual-image-wrap { isolation: isolate; position: relative; }
 .marketing-visual-image-wrap::after { border: 1px solid color-mix(in srgb, var(--marketing-brand) 40%, transparent); border-radius: 2rem; content: ""; inset: 1rem -1rem -1rem 1rem; pointer-events: none; position: absolute; z-index: -1; }

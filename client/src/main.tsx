@@ -4,6 +4,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { Toaster } from "@/components/ui/sonner";
 import { CommercialWebsite } from "./pages/CommercialWebsite";
+import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import "./index.css";
 
 const analyticsEndpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT?.replace(/\/+$/, "");
@@ -19,6 +20,7 @@ if (analyticsEndpoint && analyticsWebsiteId && !document.querySelector('script[d
 }
 
 function CommercialSurface() {
+  useSmoothScroll();
   useEffect(() => {
     if (window.location.hash === "#interactive-workspace") {
       window.location.replace("/experience");

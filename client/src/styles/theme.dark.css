@@ -99,3 +99,29 @@
 .dark #root [class*="text-amber-"] { color: #f0c56a !important; }
 .dark #root [class*="bg-rose-"] { background-color: color-mix(in srgb, var(--destructive) 14%, var(--maintainr-panel)) !important; }
 .dark #root [class*="text-rose-"] { color: #efaaa5 !important; }
+
+/* High-specificity dark foreground safeguards for public conversion surfaces. */
+html.dark #root .maintainr-public-nav-link,
+html.dark #root .maintainr-language-toggle,
+html.dark #root .maintainr-theme-toggle { color: var(--maintainr-on-dark-muted) !important; }
+html.dark #root .maintainr-public-nav-link:hover,
+html.dark #root .maintainr-public-nav-link-active,
+html.dark #root .maintainr-language-toggle:hover,
+html.dark #root .maintainr-theme-toggle:hover { color: var(--maintainr-mint-100) !important; }
+html.dark #root .commercial-tour { background: var(--maintainr-forest-900) !important; color: var(--maintainr-ink); }
+html.dark #root .commercial-tour :is(h2, h3) { color: var(--maintainr-mint-100) !important; }
+html.dark #root .commercial-tour :is(p, [class*="text-[#526176]"]) { color: var(--maintainr-on-dark-muted) !important; }
+html.dark #root .commercial-tour > div > div:last-child article { background: var(--maintainr-evergreen-800) !important; border-color: var(--maintainr-line) !important; }
+html.dark #root .commercial-tour article svg { color: var(--maintainr-sage-400) !important; }
+html.dark #root .commercial-tour > div > div:first-of-type a { background: var(--maintainr-sage-400) !important; color: var(--maintainr-ink-950) !important; }
+html.dark #root .marketing-price-badge { background: var(--maintainr-sage-400) !important; color: var(--maintainr-ink-950) !important; }
+html.dark #root .maintainr-dashboard-showcase [class*="text-teal-100"] { color: var(--maintainr-mint-100) !important; }
+
+/* Direct root token for header controls: avoids fallback if inherited marketing aliases are unavailable during theme hydration. */
+html.dark #root .maintainr-public-nav-link,
+html.dark #root .maintainr-language-toggle,
+html.dark #root .maintainr-theme-toggle { color: var(--maintainr-mint-100) !important; }
+html.dark #root .maintainr-public-nav-link:hover,
+html.dark #root .maintainr-public-nav-link-active,
+html.dark #root .maintainr-language-toggle:hover,
+html.dark #root .maintainr-theme-toggle:hover { color: var(--maintainr-white) !important; }

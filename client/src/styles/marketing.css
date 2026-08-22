@@ -116,3 +116,62 @@
   .marketing-role-card:hover,
   .marketing-adoption-grid article:hover { border-color: var(--marketing-brand); box-shadow: 0 1.65rem 3.9rem color-mix(in srgb, var(--marketing-brand) 18%, transparent); transform: translateY(-.28rem); }
 }
+
+/* Premium conversion layer */
+.marketing-hero { isolation: isolate; overflow: hidden; position: relative; }
+.marketing-hero::before { background: radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--marketing-brand) 28%, transparent), transparent 24rem), radial-gradient(circle at 84% 12%, color-mix(in srgb, var(--marketing-accent) 24%, transparent), transparent 23rem), radial-gradient(circle at 62% 72%, color-mix(in srgb, var(--marketing-brand) 16%, transparent), transparent 28rem); content: ""; filter: blur(12px); inset: -12%; opacity: .72; pointer-events: none; position: absolute; transform: translate3d(0, 0, 0) scale(1.02); z-index: -2; animation: maintainr-mesh-drift 18s ease-in-out infinite alternate; }
+.marketing-hero-grid { opacity: .6; }
+.marketing-hero-copy-centered { position: relative; z-index: 2; }
+.marketing-hero-title { font-size: clamp(3.25rem, 7vw, 7.4rem); font-weight: 650; letter-spacing: -.085em; line-height: .94; margin: 1.15rem auto 0; max-width: 13ch; text-wrap: balance; }
+.marketing-hero-title span { display: inline-block; will-change: transform, opacity; }
+.marketing-hero-copy-centered > em { display: block; font-size: clamp(2.4rem, 5vw, 5.8rem); letter-spacing: -.08em; line-height: .98; margin-top: .25rem; }
+.marketing-hero-copy-centered > p { font-size: clamp(1.05rem, 1.4vw, 1.25rem); line-height: 1.75; max-width: 44rem; }
+.marketing-primary-action, .marketing-secondary-action { min-height: 3.35rem; padding-inline: 1.25rem; }
+.marketing-primary-action { box-shadow: 0 1.1rem 2.2rem color-mix(in srgb, var(--marketing-brand) 22%, transparent); }
+.marketing-primary-action:hover { box-shadow: 0 1.35rem 2.5rem color-mix(in srgb, var(--marketing-brand) 34%, transparent); transform: translateY(-3px); }
+.marketing-outcome-bar { margin: -1.2rem auto 0; position: relative; z-index: 5; }
+.marketing-outcome-grid { border: 1px solid color-mix(in srgb, var(--marketing-brand) 30%, transparent); border-radius: 1.65rem; box-shadow: 0 1.5rem 3.5rem color-mix(in srgb, var(--marketing-ink) 13%, transparent); display: grid; gap: 0; grid-template-columns: repeat(3, 1fr); overflow: hidden; }
+.marketing-metric { align-items: center; display: grid; gap: 1rem; grid-template-columns: auto 1fr; min-height: 8.5rem; padding: 1.4rem clamp(1.1rem, 3vw, 2.5rem); }
+.marketing-metric + .marketing-metric { border-inline-start: 1px solid color-mix(in srgb, var(--marketing-brand) 20%, transparent); }
+.marketing-metric-value { color: var(--marketing-brand); font-size: clamp(2.6rem, 5vw, 4.5rem); font-weight: 650; letter-spacing: -.08em; line-height: .85; }
+.marketing-metric .marketing-eyebrow { margin: 0; }
+.marketing-metric > div > p { color: var(--marketing-muted); font-size: .85rem; line-height: 1.4; margin: .35rem 0 0; }
+.marketing-problem-card, .marketing-workflow-card, .marketing-role-card, .marketing-adoption-grid article, .marketing-price-card { box-shadow: 0 .9rem 2.2rem color-mix(in srgb, var(--marketing-ink) 8%, transparent); transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease; }
+.marketing-problem-card:hover, .marketing-workflow-card:hover, .marketing-role-card:hover, .marketing-adoption-grid article:hover, .marketing-price-card:hover { box-shadow: 0 1.35rem 3.2rem color-mix(in srgb, var(--marketing-ink) 16%, transparent); transform: translateY(-7px); }
+.marketing-visual-image-wrap { isolation: isolate; position: relative; }
+.marketing-visual-image-wrap::after { border: 1px solid color-mix(in srgb, var(--marketing-brand) 40%, transparent); border-radius: 2rem; content: ""; inset: 1rem -1rem -1rem 1rem; pointer-events: none; position: absolute; z-index: -1; }
+.marketing-visual-image { box-shadow: 0 1.8rem 3.5rem color-mix(in srgb, var(--marketing-ink) 18%, transparent); transition: box-shadow .35s ease, transform .35s ease; }
+.marketing-visual-image-wrap:hover .marketing-visual-image { box-shadow: 0 2.2rem 4.5rem color-mix(in srgb, var(--marketing-ink) 26%, transparent); transform: scale(1.025); }
+.marketing-proof-dark { background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--marketing-accent) 15%, transparent), transparent 30rem), linear-gradient(135deg, var(--marketing-dark), var(--marketing-paper-dark)); color: var(--marketing-inverse); padding: clamp(5.5rem, 9vw, 9rem) 0; }
+.marketing-proof-dark .marketing-section-intro h2, .marketing-proof-dark .marketing-section-intro p { color: var(--marketing-inverse); }
+.marketing-proof-dark .marketing-section-intro p { opacity: .78; }
+.marketing-testimonial-grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); margin-top: 3.5rem; }
+.marketing-testimonial { background: color-mix(in srgb, var(--marketing-inverse) 7%, transparent); border: 1px solid color-mix(in srgb, var(--marketing-inverse) 19%, transparent); border-radius: 1.4rem; margin: 0; padding: clamp(1.4rem, 3vw, 2.4rem); transition: background .25s ease, transform .25s ease; }
+.marketing-testimonial:hover { background: color-mix(in srgb, var(--marketing-inverse) 11%, transparent); transform: translateY(-5px); }
+.marketing-testimonial > svg { color: var(--marketing-accent); }
+.marketing-testimonial > p { font-size: clamp(1.15rem, 1.8vw, 1.55rem); line-height: 1.55; margin: 1.6rem 0 2rem; }
+.marketing-testimonial footer { display: grid; gap: .25rem; }
+.marketing-testimonial footer span { color: color-mix(in srgb, var(--marketing-inverse) 60%, transparent); font-size: .8rem; }
+.marketing-pricing-section { background: var(--marketing-paper-soft); padding: clamp(5.5rem, 9vw, 9rem) 0; }
+.marketing-pricing-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 3.5rem; }
+.marketing-price-card { background: color-mix(in srgb, var(--marketing-paper) 94%, transparent); border: 1px solid var(--marketing-line); border-radius: 1.35rem; display: flex; flex-direction: column; min-height: 25rem; padding: clamp(1.4rem, 3vw, 2.25rem); position: relative; }
+.marketing-price-card-featured { background: linear-gradient(160deg, color-mix(in srgb, var(--marketing-brand-soft) 70%, var(--marketing-paper)), var(--marketing-paper)); border-color: color-mix(in srgb, var(--marketing-brand) 55%, var(--marketing-line)); box-shadow: 0 1.4rem 3.8rem color-mix(in srgb, var(--marketing-brand) 18%, transparent); }
+.marketing-price-badge { background: var(--marketing-brand); border-radius: 999px; color: var(--marketing-inverse); font-size: .62rem; font-weight: 800; letter-spacing: .12em; padding: .42rem .7rem; position: absolute; right: 1.25rem; top: 1.25rem; }
+.marketing-price-detail { color: var(--marketing-muted); font-size: .92rem; line-height: 1.5; margin: .8rem 0 0; }
+.marketing-price-rule { border-top: 1px solid var(--marketing-line); margin: 1.5rem 0 1.2rem; }
+.marketing-price-card ul { display: grid; gap: .75rem; list-style: none; margin: 0 0 2rem; padding: 0; }
+.marketing-price-card li { align-items: flex-start; color: var(--marketing-ink); display: flex; font-size: .88rem; gap: .55rem; line-height: 1.45; }
+.marketing-price-card li svg { color: var(--marketing-brand); flex: 0 0 auto; margin-top: .12rem; }
+.marketing-price-card .marketing-primary-action { margin-top: auto; width: 100%; }
+@keyframes maintainr-mesh-drift { 0% { transform: translate3d(-2%, -1%, 0) scale(1.02); } 50% { transform: translate3d(2%, 1%, 0) scale(1.07); } 100% { transform: translate3d(-1%, 3%, 0) scale(1.03); } }
+@media (max-width: 760px) {
+  .marketing-hero-title { font-size: clamp(2.7rem, 13vw, 4.5rem); }
+  .marketing-outcome-grid, .marketing-testimonial-grid, .marketing-pricing-grid { grid-template-columns: 1fr; }
+  .marketing-metric { min-height: 6rem; }
+  .marketing-metric + .marketing-metric { border-inline-start: 0; border-top: 1px solid color-mix(in srgb, var(--marketing-brand) 20%, transparent); }
+  .marketing-visual-image-wrap::after { inset: .7rem -.45rem -.7rem .45rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marketing-hero::before { animation: none; }
+  .marketing-problem-card:hover, .marketing-workflow-card:hover, .marketing-role-card:hover, .marketing-adoption-grid article:hover, .marketing-price-card:hover, .marketing-testimonial:hover, .marketing-primary-action:hover, .marketing-visual-image-wrap:hover .marketing-visual-image { transform: none; }
+}

@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
-export const commercialThemeStorageKey = "maintainr-commercial-theme";
-export function resolveCommercialTheme(stored: string | null): Theme { return stored === "dark" ? "dark" : "light"; }
 
 interface ThemeContextType {
   theme: Theme;
@@ -23,22 +21,44 @@ export function ThemeProvider({
   defaultTheme = "light",
   switchable = false,
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(() => switchable ? resolveCommercialTheme(localStorage.getItem(commercialThemeStorageKey)) : defaultTheme);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (switchable) {
+      const stored = localStorage.getItem("theme");
+      return (stored as Theme) || defaultTheme;
+    }
+    return defaultTheme;
+  });
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.toggle("dark", theme === "dark");
-    root.style.colorScheme = theme;
-    if (switchable) localStorage.setItem(commercialThemeStorageKey, theme);
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    if (switchable) {
+      localStorage.setItem("theme", theme);
+    }
   }, [theme, switchable]);
 
-  const toggleTheme = switchable ? () => setTheme(previous => previous === "light" ? "dark" : "light") : undefined;
+  const toggleTheme = switchable
+    ? () => {
+        setTheme(prev => (prev === "light" ? "dark" : "light"));
+      }
+    : undefined;
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme, switchable }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme, switchable }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (!context) throw new Error("useTheme must be used within ThemeProvider");
+  if (!context) {
+    throw new Error("useTheme must be used within ThemeProvider");
+  }
   return context;
 }

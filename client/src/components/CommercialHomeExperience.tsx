@@ -1,15 +1,13 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, BellRing, Building2, CheckCircle2, ClipboardCheck, FileCheck2, Languages, Quote, Route, ShieldCheck, Smartphone, UserRoundCheck, UsersRound, Wrench } from "lucide-react";
+import { ArrowRight, BellRing, Building2, CheckCircle2, ClipboardCheck, FileCheck2, Languages, Quote, Route, ShieldCheck, UserRoundCheck, UsersRound, Wrench } from "lucide-react";
 import type { ReactNode } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const visual = {
   dashboard: "/assets/images/maintainr-dashboard-manager.webp",
   dashboardVideo: "/assets/videos/maintainr-dashboard-hero.mp4",
-  mobileDashboard: "/assets/images/maintainr-dashboard-mobile.webp",
   report: "/assets/images/maintainr-mobile-reporting-workflow.webp",
   evidence: "/assets/images/maintainr-field-evidence-workflow.webp",
-  heroOrbit: "/assets/images/maintainr-hero-product-orbit.webp",
   workflowFloat: "/assets/images/maintainr-workflow-float.webp",
 };
 
@@ -37,16 +35,11 @@ function Secondary({ href, children }: { href: string; children: ReactNode }) {
 function DashboardFrame({ t }: { t: (english: string, arabic: string) => string }) {
   const reduce = useReducedMotion();
   return <motion.div initial={{ opacity: 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .72, delay: .12, ease: [0.23, 1, .32, 1] }} className="marketing-dashboard-stage marketing-dashboard-stage-reference marketing-png-hero-stage">
-    <div className="marketing-dashboard-aura" aria-hidden="true" />
-    <img src={visual.heroOrbit} alt="" aria-hidden="true" className="marketing-png-hero-orbit" />
-    <img src={visual.workflowFloat} alt="" aria-hidden="true" className="marketing-png-hero-workflow" />
     <div className="marketing-png-live-dashboard">
       <div className="marketing-png-live-dashboard-bar"><span /><span /><span /><p>{t("Live Maintainr workspace", "مساحة عمل Maintainr الحية")}</p><div><i />{t("Ready", "جاهزة")}</div></div>
       {reduce ? <img src={visual.dashboard} alt={t("Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} /> : <video src={visual.dashboardVideo} poster={visual.dashboard} autoPlay muted loop playsInline preload="metadata" aria-label={t("Animated Maintainr property manager workspace showing open tickets, in-progress work, resolved work, and a next-focus card", "مساحة عمل مدير العقار المتحركة في Maintainr تعرض التذاكر المفتوحة والعمل الجاري والعمل المنجز وبطاقة التركيز التالية")} />}
       <div className="marketing-png-live-dashboard-status"><CheckCircle2 size={15} />{t("Every update stays with the request", "يبقى كل تحديث مع الطلب")}</div>
     </div>
-    <div className="marketing-reference-float-card"><BellRing size={16} /><span><b>{t("Next step visible", "الخطوة التالية مرئية")}</b><small>{t("One connected maintenance record", "سجل صيانة متصل واحد")}</small></span></div>
-    <div className="marketing-mobile-proof"><img src={visual.mobileDashboard} alt={t("Maintainr mobile workspace", "مساحة عمل Maintainr على الهاتف")} /><span><Smartphone size={14} />{t("Field-ready", "جاهز للميدان")}</span></div>
   </motion.div>;
 }
 

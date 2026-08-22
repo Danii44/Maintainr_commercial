@@ -155,3 +155,32 @@
   .marketing-png-live-dashboard > video { display: none; }
   .marketing-png-live-dashboard > video + .marketing-png-live-dashboard-status { position: relative; }
 }
+
+/* Clean video-led hero: the dashboard film is the single primary visual. */
+.marketing-png-hero-stage {
+  min-height: 0;
+  padding: clamp(.75rem, 2vw, 1.5rem) 0 0;
+}
+.marketing-png-hero-stage::before { display: none; }
+.marketing-png-hero-stage .marketing-png-live-dashboard {
+  border-color: color-mix(in srgb, var(--marketing-brand) 36%, transparent);
+  box-shadow: 0 2rem 4.5rem color-mix(in srgb, var(--marketing-ink) 24%, transparent);
+  left: auto;
+  margin-inline: auto;
+  max-width: 66rem;
+  position: relative;
+  top: auto;
+  transform: none;
+  width: 100%;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .marketing-png-hero-stage .marketing-png-live-dashboard { animation: maintainr-clean-dashboard-float 7.5s ease-in-out infinite; }
+}
+@keyframes maintainr-clean-dashboard-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@media (max-width: 760px) {
+  .marketing-png-hero-stage { padding: .25rem 0 0; }
+  .marketing-png-hero-stage .marketing-png-live-dashboard { border-radius: 1rem; left: auto; top: auto; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marketing-png-hero-stage .marketing-png-live-dashboard { animation: none !important; }
+}

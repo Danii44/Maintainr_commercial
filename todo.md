@@ -16,5 +16,6 @@
 - [x] Replace missing restaurant-specific content with documented starter UAE data until final details are supplied.
 - [x] Complete browser validation for the shared header, menu, cart, COD checkout, tracking, and staff empty state on desktop and mobile; staff mutation still needs an authorized account for production acceptance.
 - [x] Commit and push the finished project to the selected GitHub repository.
-- [ ] Exercise the cart drawer and cash-on-delivery checkout with the seeded starter menu, confirm order creation, and verify the returned tracking code.
-- [ ] Verify invalid tracking-code, empty-cart, checkout-validation, and staff access states after the shared-header refactor.
+- [x] Exercise the cart drawer and cash-on-delivery checkout with the seeded starter menu, confirm order creation, and verify the returned tracking code FK-MT4S5E6R.
+- [x] Verify invalid tracking-code, empty-cart, checkout-validation, and staff access states after the shared-header refactor.
+- [x] Add or verify an explicit visible empty-checkout validation message after the shared-header refactor.

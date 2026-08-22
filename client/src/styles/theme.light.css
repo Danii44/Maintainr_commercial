@@ -82,3 +82,11 @@ html:not(.dark) #root [class*="text-violet-"],
 html:not(.dark) #root [class*="text-teal-700"] { color: var(--maintainr-action) !important; }
 html:not(.dark) #root [class*="border-violet-"],
 html:not(.dark) #root [class*="border-teal-"] { border-color: var(--maintainr-line) !important; }
+
+/* Dark demo rail exception: global light-mode slate normalization must not recolor content on the dark rail. */
+html:not(.dark) #root .maintainr-demo-rail-surface :is([class*="text-slate-300"], [class*="text-slate-400"], [class*="text-slate-500"], .maintainr-demo-muted) {
+  color: var(--maintainr-on-dark-muted) !important;
+}
+html:not(.dark) #root .maintainr-demo-rail-surface .maintainr-demo-action-text {
+  color: var(--maintainr-mint-100) !important;
+}

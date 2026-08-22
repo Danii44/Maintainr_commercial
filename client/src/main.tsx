@@ -1,39 +1,81 @@
+import { trpc } from "@/lib/trpc";
+import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
-import { useEffect } from "react";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { LanguageProvider } from "./contexts/LanguageContext";
-import { Toaster } from "@/components/ui/sonner";
-import { CommercialWebsite } from "./pages/CommercialWebsite";
-import { useSmoothScroll } from "./hooks/useSmoothScroll";
+import superjson from "superjson";
+import App from "./App";
+import { startLogin } from "./const";
 import "./index.css";
 
-const analyticsEndpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT?.replace(/\/+$/, "");
-const analyticsWebsiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID;
+const queryClient = new QueryClient();
 
-if (analyticsEndpoint && analyticsWebsiteId && !document.querySelector('script[data-maintainr-analytics]')) {
-  const analyticsScript = document.createElement("script");
-  analyticsScript.src = `${analyticsEndpoint}/umami`;
-  analyticsScript.defer = true;
-  analyticsScript.dataset.websiteId = analyticsWebsiteId;
-  analyticsScript.dataset.maintainrAnalytics = "true";
-  document.head.appendChild(analyticsScript);
-}
+const redirectToLoginIfUnauthorized = (error: unknown) => {
+  if (!(error instanceof TRPCClientError)) return;
+  if (typeof window === "undefined") return;
 
-function CommercialSurface() {
-  useSmoothScroll();
-  useEffect(() => {
-    if (window.location.hash === "#interactive-workspace") {
-      window.location.replace("/experience");
-      return;
-    }
-    document.querySelectorAll<HTMLAnchorElement>('a[href="#interactive-workspace"]').forEach((anchor) => {
-      anchor.setAttribute("href", "/experience");
-    });
-  }, []);
+  const isUnauthorized = error.message === UNAUTHED_ERR_MSG;
 
-  return <ThemeProvider switchable><LanguageProvider><Toaster/><CommercialWebsite/></LanguageProvider></ThemeProvider>;
-}
+  if (!isUnauthorized) return;
+
+  startLogin();
+};
+
+queryClient.getQueryCache().subscribe(event => {
+  if (event.type === "updated" && event.action.type === "error") {
+    const error = event.query.state.error;
+    redirectToLoginIfUnauthorized(error);
+    console.error("[API Query Error]", error);
+  }
+});
+
+queryClient.getMutationCache().subscribe(event => {
+  if (event.type === "updated" && event.action.type === "error") {
+    const error = event.mutation.state.error;
+    redirectToLoginIfUnauthorized(error);
+    console.error("[API Mutation Error]", error);
+  }
+});
+
+const trpcClient = trpc.createClient({
+  links: [
+    httpBatchLink({
+      url: "/api/trpc",
+      transformer: superjson,
+      headers() {
+        // Preview auto-login fallback: when the browser blocks iframe cookies
+        // (Safari ITP / private browsing / WebView), the runtime mirrors the
+        // session into sessionStorage so we can forward it as a Bearer token.
+        // The regular OAuth cookie flow keeps working and takes priority server-side.
+        try {
+          const raw = sessionStorage.getItem("manus-cookie");
+          if (raw) {
+            const prefix = `${COOKIE_NAME}=`;
+            const pair = raw.split(";").find(s => s.trim().startsWith(prefix));
+            const token = pair?.trim().slice(prefix.length);
+            if (token) {
+              return { Authorization: `Bearer ${token}` };
+            }
+          }
+        } catch {
+          // sessionStorage unavailable
+        }
+        return {};
+      },
+      fetch(input, init) {
+        return globalThis.fetch(input, {
+          ...(init ?? {}),
+          credentials: "include",
+        });
+      },
+    }),
+  ],
+});
 
 createRoot(document.getElementById("root")!).render(
-  <CommercialSurface />
+  <trpc.Provider client={trpcClient} queryClient={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </trpc.Provider>
 );
